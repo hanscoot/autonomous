@@ -1,0 +1,58 @@
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Add A New Person</h4>
+      <button class="close blank" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div>
+          &nbsp;
+        </div>
+        Name
+        <div class="input-group">
+          <input #name class="form-control" id="input1" placeholder="Enter Name">
+        </div>
+        <div>
+          <p class="text-danger" id="result1"></p>
+          &nbsp;
+        </div>
+        Email
+        <div class="input-group">
+          <input #email class="form-control" id="input2" placeholder="Enter Email">
+          <div class="input-group-append">
+            <span class="input-group-text">@nomuda.com</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-danger" id="result2"></p>
+          &nbsp;
+        </div>
+        Phone Number
+        <div class="input-group">
+          <input #number class="form-control" id="input3" placeholder="Enter Phone Number">
+        </div>
+        <div>
+          <p class="text-danger" id="result3"></p>
+          &nbsp;
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input class="custom-control-input" type="checkbox" value="" id="admin" (change)="check($event)">
+          <label class="custom-control-label" for="admin">
+            Admin access
+          </label>
+        </div>
+        <div>
+          &nbsp;
+        </div>
+        <div>
+          <button class="btn btn-sm btn-primary float-right" (click)="Add(name.value, email.value, number.value)">Add Person</button>
+        </div>
+        <div>
+          &nbsp;
+        </div>
+      </form>
+    </div>
+  </div>
+

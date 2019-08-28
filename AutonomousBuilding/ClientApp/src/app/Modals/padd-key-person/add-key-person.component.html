@@ -1,0 +1,22 @@
+  <div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Add a key</h4>
+    <button class="close blank" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="example">Keys availible</label>
+      <select class="form-control" id="example" (change)="selects($event)">
+        <option value="" disabled selected>Select your key</option>
+        <option *ngFor="let i of keys">{{i.keyID}}</option>
+      </select>
+    </div>
+    <div>
+      &nbsp;
+    </div>
+    <button class="btn btn-sm btn-primary float-right" (click)="add()">Add</button>
+  </div>
+</div>
+

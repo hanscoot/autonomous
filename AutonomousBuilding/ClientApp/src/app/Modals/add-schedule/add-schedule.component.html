@@ -1,0 +1,72 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">Add a new schedule</h4>
+    <button class="close blank" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <ng-container *ngIf="!show">
+        <label for="example">Times Available</label>
+        <select class="form-control" id="example" (change)="select($event)">
+          <option value="" disabled selected>Select your times</option>
+          <option *ngFor="let i of times">{{i}}</option>
+        </select>
+        <div>
+          <p class="text-danger" id="result4"></p>
+          &nbsp;
+        </div>
+        <label for="example">Days Available</label>
+        <select class="form-control" id="example" (change)="selects($event)">
+          <option value="" disabled selected>Select your days</option>
+          <option *ngFor="let i of days">{{i}}</option>
+        </select>
+        <div>
+          <p class="text-danger" id="result5"></p>
+          &nbsp;
+        </div>
+      </ng-container>
+      <ng-container *ngIf="show">
+        <div>
+          <label for="starttime">Start Time</label>
+          <input type="time" id="starttime" class="form-control" (change)="write($event)">
+        </div>
+        <div>
+          <p class="text-danger" id="result1"></p>
+          &nbsp;
+        </div>
+        <div>
+          <label for="endtime">End Time</label>
+          <input type="time" id="endtime" class="form-control" (change)="writ($event)">
+        </div>
+        <div>
+          <p class="text-danger" id="result2"></p>
+          &nbsp;
+        </div>
+        <div>
+          &nbsp;
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let i of day">
+          <input class="custom-control-input" type="checkbox" value="" id="{{i}}" (change)="check(i, $event)">
+          <label class="custom-control-label" for="{{i}}">
+            {{i}}
+          </label>
+        </div>
+        <div>
+          <p class="text-danger" id="result3"></p>
+          &nbsp;
+        </div>
+      </ng-container>
+      <button class="btn btn-sm btn-primary float-left" (click)="toggle()">{{buttonName}}</button>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <ng-container *ngIf="!show">
+      <button class="btn btn-sm btn-primary float-right" (click)="add()">Add new schedule</button>
+    </ng-container>
+    <ng-container *ngIf="show">
+      <button class="btn btn-sm btn-primary float-right" (click)="addit()">Add new schedule</button>
+    </ng-container>
+  </div>
+</div>

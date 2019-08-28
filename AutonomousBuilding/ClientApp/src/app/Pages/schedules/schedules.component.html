@@ -1,0 +1,37 @@
+<body style="padding-left:3%; padding-right:3%">
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div id="v">
+    <h4 class="text-muted ">Schedules</h4><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="open()">Add schedule</button>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Times</th>
+          <th scope="col">Days</th>
+          <th scope="col">Number of keys</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of serverData">
+          <th scope="row">
+            {{item.times}}
+          </th>
+          <th scope="row">
+            {{item.days}}
+          </th>
+          <th scope="row">
+            {{item.number}}
+          </th>
+          <th scope="row">
+            <button class="btn btn-sm btn-light float-right" routerLink="/schedule/{{item.scheduleID}}">Details</button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>

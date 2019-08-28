@@ -1,0 +1,38 @@
+<body style="padding-left:3%; padding-right:3%;">
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div id="v">
+    <h4 class="text-muted">Account</h4><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="account()">Edit Account Details</button>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div>
+    <h6>Name:</h6> {{person.name}}
+    <div>&nbsp;</div>
+    <h6>Email:</h6> {{person.email}}
+    <div>&nbsp;</div>
+    <h6>Password:</h6> {{repeatedString}}
+    <div>&nbsp;</div>
+    <h6>Contact Number:</h6> {{person.number}}
+    <div>&nbsp;</div>
+    <h6>Key assigned:</h6>
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of key">
+      <li>
+        {{i.keyID}}
+      </li>
+    </ul>
+    <h6>Locks assigned:</h6>
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of locks">
+      <li>
+        {{i.name}}
+      </li>
+    </ul>
+    <h6>Schedules assigned:</h6>
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of sch">
+      <li>
+        {{i.days}} {{i.times}}
+      </li>
+    </ul>
+    <div>&nbsp;</div>
+  </div>
+</body>
