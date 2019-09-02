@@ -1,18 +1,16 @@
 
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { take } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NavbarService } from '../../navbar.service';
 import { DatePipe } from '@angular/common';
 import { AddKeyLockComponent } from '../../Modals/padd-key-lock/add-key-lock.component';
 import { EditLockComponent } from '../../Modals/edit-lock/edit-lock.component';
 import { LockData } from '../locks/locks.component';
-import { TestData } from '../people/people.component';
 import { Log } from '../logs/logs.component';
+import { AppComponent } from '../../app.component';
 
 
 
@@ -38,8 +36,8 @@ export class DetailsLocksComponent implements OnInit {
   public tex: string = "Locked";
 
   constructor(private http: HttpClient, private modalService: NgbModal,
-    private route: ActivatedRoute, private router: Router, private nav: NavbarService,
-    private datepipe: DatePipe) { }
+    private route: ActivatedRoute, private router: Router,
+    private datepipe: DatePipe, private log: AppComponent) { }
 
   ngOnInit() {
     this.getlock().subscribe(data => { this.lock = data })
@@ -69,6 +67,7 @@ export class DetailsLocksComponent implements OnInit {
       logs.lockName = this.lock.name
       this.http.post<Log>('/api/log/test', logs, httpOptions).subscribe()
       this.LOG.unshift(logs)
+      this.log.gets()
     })
   }
   public LOG: Log[] = []

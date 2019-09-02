@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NavbarService } from '../../navbar.service';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-logs',
@@ -10,7 +11,7 @@ import { NavbarService } from '../../navbar.service';
 })
 export class LogsComponent implements OnInit {
 
-  constructor(private http: HttpClient, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private nav: NavbarService, private log: AppComponent) { }
 
   ngOnInit() {
     this.getlog().subscribe(data => {
@@ -58,6 +59,7 @@ export class LogsComponent implements OnInit {
           this.LOG = this.LOG.filter(k => k !== i);
           let url = `/api/log/${i.logID}`
           this.http.delete<Log>(url).subscribe()
+          this.log.gets()
         }
       })
     }

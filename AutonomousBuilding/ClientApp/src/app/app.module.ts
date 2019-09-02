@@ -23,10 +23,9 @@ import { AddScheduleComponent } from './Modals/add-schedule/add-schedule.compone
 import { AddKeyScheduleComponent } from './Modals/padd-key-schedule/add-key-schedule.component';
 import { EditScheduleComponent } from './Modals/edit-schedule/edit-schedule.component';
 import { EditLockComponent } from './Modals/edit-lock/edit-lock.component';
-import { PreviousRouteService } from './previous-route.service';
 import { NavbarService } from './navbar.service';
 import { EditAccountComponent } from './Modals/edit-account/edit-account.component';
-import { HomeNonadminComponent } from './home-nonadmin/home-nonadmin.component';
+import { HomeNonadminComponent } from './home-nonadmin (template only)/home-nonadmin.component';
 import { SchedulesComponent } from './Pages/schedules/schedules.component';
 import { LocksComponent } from './Pages/locks/locks.component';
 import { KeysComponent } from './Pages/keys/keys.component';
@@ -85,7 +84,7 @@ const routes: Routes = [
     AngularFontAwesomeModule
   ],
   providers: [NgbActiveModal, DetailsPeopleComponent, DetailsLocksComponent, DetailsSchedulesComponent,
-    PreviousRouteService, NavbarService, HomeNonadminComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
+    NavbarService, HomeNonadminComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
     LogsComponent, PeopleComponent, SchedulesComponent],
   bootstrap: [AppComponent],
   entryComponents: [EditPersonComponent, AddPersonComponent, AddKeyComponent, EditLockComponent,

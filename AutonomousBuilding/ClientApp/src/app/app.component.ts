@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { NavbarService } from './navbar.service';
 import { Log } from './Pages/logs/logs.component';
 
 @Component({
@@ -11,20 +9,27 @@ import { Log } from './Pages/logs/logs.component';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient, private nav: NavbarService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.getlog().subscribe(data => {
+    this.gets()
+  }
+
+  public shortlog: Log[] = [];
+  public LOG: Log[] = [];
+  //gets
+  gets() {
+    this.http.get<Log[]>('/api/log/data').subscribe(data => {
       this.LOG = data;
       this.LOG.sort(this.compare)
       this.shortlog = this.LOG.slice(0, 15);
     })
   }
 
-  public shortlog: Log[] = [];
+
   //removes all log data visially
   clear() {
-    this.getlog().subscribe(data => {
+    this.http.get<Log[]>('/api/log/data').subscribe(data => {
       this.LOG = data;
       this.LOG.sort(this.compare)
       this.shortlog = this.LOG.slice(0, 15);
@@ -33,7 +38,8 @@ export class AppComponent implements OnInit {
       }
     })
   }
-  //sort
+
+  //sorts in descending order
   compare(a, b) {
     if (a.logID > b.logID) {
       return -1;
@@ -43,12 +49,9 @@ export class AppComponent implements OnInit {
     }
     return 0;
   }
-  //gets log data
-  public LOG: Log[] = []
-  getlog(): Observable<Log[]> {
-    return this.http.get<Log[]>('/api/log/data')
-  }
 
+  hide = true
+  //shows/hides scroll button
   //scrolls to the top of the page   
   function() {
     window.scroll({
