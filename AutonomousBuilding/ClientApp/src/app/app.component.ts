@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Log } from './Pages/logs/logs.component';
+import { NavbarService } from './Services/navbar.Service';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,13 @@ import { Log } from './Pages/logs/logs.component';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient, public nav: NavbarService) { }
+  
   ngOnInit() {
     this.gets()
+    this.nav.hide()
   }
-
+  
   public shortlog: Log[] = [];
   public LOG: Log[] = [];
   //gets

@@ -35,7 +35,7 @@ export class DetailsLocksComponent implements OnInit {
   public one: boolean = false;
   public tex: string = "Locked";
 
-  constructor(private http: HttpClient, private modalService: NgbModal,
+  constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
     private datepipe: DatePipe, private log: AppComponent) { }
 
@@ -138,7 +138,7 @@ export class DetailsLocksComponent implements OnInit {
   }
   //opens modal to add key to specific lock
   open() {
-    const modalRef = this.modalService.open(AddKeyLockComponent)
+    const modalRef = this.modalServices.open(AddKeyLockComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getlock();
@@ -147,7 +147,7 @@ export class DetailsLocksComponent implements OnInit {
   }
   //opens modal to edit specific lock
   edit() {
-    const modalRef = this.modalService.open(EditLockComponent)
+    const modalRef = this.modalServices.open(EditLockComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getlock();

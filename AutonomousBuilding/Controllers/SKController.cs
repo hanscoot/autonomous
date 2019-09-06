@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutonomousBuilding.Models;
 using AutonomousBuilding.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-  [Route("api/sk")]
+    [Authorize]
+    [Route("api/sk")]
   [ApiController]
   public class SKController : ControllerBase
   {

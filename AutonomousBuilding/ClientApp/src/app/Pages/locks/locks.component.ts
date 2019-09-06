@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LocksComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal) { }
 
   ngOnInit() {
     this.get()
@@ -23,7 +23,7 @@ export class LocksComponent implements OnInit {
   }
   //open modal to add new lock
   open() {
-    const modalRef = this.modalService.open(AddLockComponent);
+    const modalRef = this.modalServices.open(AddLockComponent);
     modalRef.result.then(() => {
       this.get()
     });

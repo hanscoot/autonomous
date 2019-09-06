@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NavbarService } from '../navbar.service';
+import { NavbarService } from '../Services/navbar.Service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EditAccountComponent } from '../Modals/edit-account/edit-account.component';
@@ -16,7 +16,7 @@ import { LockData } from '../Pages/locks/locks.component';
 })
 export class HomeNonadminComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal,
+  constructor(private http: HttpClient, private modalServices: NgbModal,
     private nav: NavbarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -119,7 +119,7 @@ export class HomeNonadminComponent implements OnInit {
     })
   }
   account() {
-    const modalRef = this.modalService.open(EditAccountComponent);
+    const modalRef = this.modalServices.open(EditAccountComponent);
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.nav.show();

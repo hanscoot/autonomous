@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { NavbarService } from '../../navbar.service';
+import { NavbarService } from '../../Services/navbar.Service';
 import { Observable } from 'rxjs';
 import { AddKeyScheduleComponent } from '../../Modals/padd-key-schedule/add-key-schedule.component';
 import { EditScheduleComponent } from '../../Modals/edit-schedule/edit-schedule.component';
@@ -25,7 +25,7 @@ const httpOptions = {
 })
 export class DetailsSchedulesComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal,
+  constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router, private nav: NavbarService) { }
 
   public schedule: ScheduleData[] = [];
@@ -81,7 +81,7 @@ export class DetailsSchedulesComponent implements OnInit {
   }
   //opens modal to add key to specific schedule
   open() {
-    const modalRef = this.modalService.open(AddKeyScheduleComponent)
+    const modalRef = this.modalServices.open(AddKeyScheduleComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getschedule()
@@ -90,7 +90,7 @@ export class DetailsSchedulesComponent implements OnInit {
   }
   //opens modal to edit schedule
   openedit() {
-    const modalRef = this.modalService.open(EditScheduleComponent)
+    const modalRef = this.modalServices.open(EditScheduleComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getschedule()

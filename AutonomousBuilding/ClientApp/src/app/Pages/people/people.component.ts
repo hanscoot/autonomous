@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PeopleComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal) { }
 
   ngOnInit() {
     this.get()
@@ -23,7 +23,7 @@ export class PeopleComponent implements OnInit {
   }
   //opens modal to add person
   open() {
-    const modalRef = this.modalService.open(AddPersonComponent);
+    const modalRef = this.modalServices.open(AddPersonComponent);
     modalRef.result.then(() => {
       this.get()
     })
@@ -36,6 +36,6 @@ export class TestData {
   name: string;
   email: string;
   number: number;
-  deleted: boolean;
   password: string;
+  token: string;
 }

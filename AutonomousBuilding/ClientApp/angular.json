@@ -25,7 +25,7 @@
         "@schematics/angular:pipe": {
           "skipTests": true
         },
-        "@schematics/angular:service": {
+        "@schematics/angular:Services": {
           "skipTests": true
         }
       },

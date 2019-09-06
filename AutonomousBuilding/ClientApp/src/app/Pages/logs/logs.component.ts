@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NavbarService } from '../../navbar.service';
+import { NavbarService } from '../../Services/navbar.Service';
 import { AppComponent } from '../../app.component';
 
 @Component({

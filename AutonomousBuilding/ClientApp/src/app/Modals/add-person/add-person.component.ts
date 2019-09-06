@@ -53,7 +53,6 @@ export class AddPersonComponent implements OnInit {
     if (this.number(item3) === true) {
       Data.number = item3;
     }
-    Data.deleted = this.marked;
     Data.password = "nomuda";
     if ((this.number(item3) === true) && (this.email(item2) === true) && (this.name(item) === true)) {
       this.http.post<TestData[]>('/api/values/test', Data, httpOptions).subscribe(() => this.activeModal.close());

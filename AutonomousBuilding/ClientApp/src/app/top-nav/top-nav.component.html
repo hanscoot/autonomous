@@ -1,7 +1,7 @@
 <nav *ngIf="nav.visible" class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand">Autonomous Building</a>
+  <a class="navbar-brand nav-item nav-link" routerLink="/">Autonomous Building</a>
   <div class="ml-auto">
-    <button class="btn btn-sm" style="background-color:lightgrey" disabled>Log-out</button>
+    <button class="btn btn-sm" style="background-color:lightgrey" (click)="logout()">Log-out</button>
     <button class="btn" disabled></button>
     <button class="btn" disabled></button>
     <button class="btn" disabled></button>

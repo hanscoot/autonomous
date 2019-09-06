@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutonomousBuilding.Models;
 using AutonomousBuilding.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-  [Route("api/lk")]
+    [Authorize]
+    [Route("api/lk")]
   [ApiController]
   public class LKController : ControllerBase
   {

@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SchedulesComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal) { }
 
   ngOnInit() {
     this.get()
@@ -19,7 +19,7 @@ export class SchedulesComponent implements OnInit {
   public serverData: ScheduleData[] = [];
   //open add new schedule modal
   open() {
-    let modalRef = this.modalService.open(AddScheduleComponent)
+    let modalRef = this.modalServices.open(AddScheduleComponent)
     modalRef.result.then(() => {
       this.get();
     });

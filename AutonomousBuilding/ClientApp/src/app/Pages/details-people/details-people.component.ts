@@ -6,7 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { NavbarService } from '../../navbar.service';
+import { NavbarService } from '../../Services/navbar.Service';
 import { Observable } from 'rxjs';
 import { AddKeyPersonComponent } from '../../Modals/padd-key-person/add-key-person.component';
 import { EditPersonComponent } from '../../Modals/edit-person/edit-person.component';
@@ -32,7 +32,7 @@ export class DetailsPeopleComponent implements OnInit {
   public person: TestData[] = [];
   private _api = '/api/pk';
 
-  constructor(private http: HttpClient, private modalService: NgbModal,
+  constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
     private location: Location, private nav: NavbarService) { }
 
@@ -73,7 +73,7 @@ export class DetailsPeopleComponent implements OnInit {
   }
   //opens modal to add key to specific person
   open() {
-    const modalRef = this.modalService.open(AddKeyPersonComponent)
+    const modalRef = this.modalServices.open(AddKeyPersonComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getperson();
@@ -84,7 +84,7 @@ export class DetailsPeopleComponent implements OnInit {
   public show: boolean = true;
   //opens edit window
   openEdit() {
-    const modalRef = this.modalService.open(EditPersonComponent);
+    const modalRef = this.modalServices.open(EditPersonComponent);
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
       this.getperson();

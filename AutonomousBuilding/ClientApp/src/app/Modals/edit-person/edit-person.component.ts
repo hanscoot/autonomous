@@ -60,7 +60,6 @@ export class EditPersonComponent implements OnInit {
     if (this.number(three) === true) {
       ping.number = three;
     }
-    ping.deleted = this.marked
     if (((this.name(one) === true) || (this.name(one) === "one"))
       && ((this.email(two) === true) || (this.email(two) === "one"))
       && ((this.number(three) === true) || (this.number(three) === "one"))) {

@@ -7,7 +7,7 @@
     &nbsp;
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" *ngIf="nav.visible">
       <div style="padding-top:15%">
         <div class="card">
           <div class="card-header card-title">Recent Events <button class="float-right blank text-primary" (click)="clear()">Clear</button></div>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="col-md-9">
-      <ul class="nav nav-tabs" style="padding-top:5%; width:100%">
+      <ul class="nav nav-tabs" style="padding-top:5%; width:100%" *ngIf="nav.visible">
         <li class="nav-item">
           <a class="nav-link" routerLink="/Schedules" routerLinkActive="active">Schedules</a>
         </li>
@@ -46,7 +46,7 @@
     </div>
   </div>
 </body>
-<footer class="text-center">
+<footer class="text-center" *ngIf="nav.visible">
   <button class="bigArrow" (click)="function()">
     ^
   </button>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AddKeyComponent } from '../../Modals/add-key/add-key.component';
-import { NavbarService } from '../../navbar.service';
+import { NavbarService } from '../../Services/navbar.Service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class KeysComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
 
   ngOnInit() {
     this.get();
@@ -39,7 +39,7 @@ export class KeysComponent implements OnInit {
   }
   //opens add key modal
   open() {
-    let modalRef = this.modalService.open(AddKeyComponent);
+    let modalRef = this.modalServices.open(AddKeyComponent);
     modalRef.result.then(() => {
       this.get()
     });
