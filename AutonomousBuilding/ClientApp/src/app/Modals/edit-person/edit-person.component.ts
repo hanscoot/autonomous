@@ -63,10 +63,12 @@ export class EditPersonComponent implements OnInit {
     if (((this.name(one) === true) || (this.name(one) === "one"))
       && ((this.email(two) === true) || (this.email(two) === "one"))
       && ((this.number(three) === true) || (this.number(three) === "one"))) {
+      ping.clear = this.marked;
       let url = `/api/values/${ping.personId}`
       this.http.put<TestData[]>(url, ping, httpOptions).subscribe(() => this.activeModal.close())
     }
   }
+  //checkbox
   marked = false;
   check(e) {
     this.marked = e.target.checked

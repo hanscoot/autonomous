@@ -1,6 +1,9 @@
 <app-top-nav></app-top-nav>
 <body style="padding-top: 5%; padding-left: 5%; padding-right: 5%; padding-bottom:5%">
-  <h5 class="display-4">
+  <h5 class="display-4" *ngIf="nav.visible">
+    Autonomous Building
+  </h5>
+  <h5 class="display-4 text-center" *ngIf="!nav.visible">
     Autonomous Building
   </h5>
   <div>
@@ -9,7 +12,7 @@
   <div class="row">
     <div class="col-md-3" *ngIf="nav.visible">
       <div style="padding-top:15%">
-        <div class="card">
+        <div class="card" *ngIf="str.currentUser.clear">
           <div class="card-header card-title">Recent Events <button class="float-right blank text-primary" (click)="clear()">Clear</button></div>
           <div class="card-body scroll">
             <ul style="list-style: none; padding-left: 0;" *ngFor="let i of shortlog">
@@ -19,23 +22,29 @@
             </ul>
           </div>
         </div>
+        <div class="card" *ngIf="!str.currentUser.clear">
+          <div class="card-header card-title">Recent Updates <button class="float-right blank text-primary" (click)="clear()">Clear</button></div>
+          <div class="card-body scroll">
+            Nothing to report
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-9">
       <ul class="nav nav-tabs" style="padding-top:5%; width:100%" *ngIf="nav.visible">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="str.currentUser.clear">
           <a class="nav-link" routerLink="/Schedules" routerLinkActive="active">Schedules</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="str.currentUser.clear">
           <a class="nav-link" routerLink="/Locks" routerLinkActive="active">Locks</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="str.currentUser.clear">
           <a class="nav-link" routerLink="/Keys" routerLinkActive="active">Keys</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="str.currentUser.clear">
           <a class="nav-link" routerLink="/People" routerLinkActive="active">People</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="str.currentUser.clear">
           <a class="nav-link" routerLink="/Logs" routerLinkActive="active">Logs</a>
         </li>
         <li class="nav-item">
@@ -46,7 +55,7 @@
     </div>
   </div>
 </body>
-<footer class="text-center" *ngIf="nav.visible">
+<footer class="text-center" hidden>
   <button class="bigArrow" (click)="function()">
     ^
   </button>

@@ -37,9 +37,10 @@ import { AuthenticationService } from './Services/authentication.Service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AuthGuard } from './Guards/auth.guard';
+import { AccountGuard } from './Guards/account.guard';
 
 const routes: Routes = [
-  { path: 'Account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'Account', component: AccountComponent, canActivate: [AccountGuard] },
   { path: 'Keys', component: KeysComponent, canActivate: [AuthGuard] },
   { path: 'Locks', component: LocksComponent, canActivate: [AuthGuard] },
   { path: 'Logs', component: LogsComponent, canActivate: [AuthGuard] },
@@ -92,7 +93,7 @@ const routes: Routes = [
   ],
   providers: [NgbActiveModal, DetailsPeopleComponent, DetailsLocksComponent, DetailsSchedulesComponent,
     NavbarService, AuthenticationService, HomeNonadminComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
-    LogsComponent, PeopleComponent, SchedulesComponent,
+    LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

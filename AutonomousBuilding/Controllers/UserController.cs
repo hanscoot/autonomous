@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/values")]
     [ApiController]
     public class UserController : ControllerBase

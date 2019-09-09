@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Guards\account.guard.ts" />
     <None Remove="ClientApp\src\app\Guards\auth.guard.ts" />
     <None Remove="ClientApp\src\app\Interceptors\error.interceptor.ts" />
     <None Remove="ClientApp\src\app\Interceptors\jwt.interceptor.ts" />
@@ -44,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\Guards\account.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Guards\auth.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptors\error.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptors\jwt.interceptor.ts" />

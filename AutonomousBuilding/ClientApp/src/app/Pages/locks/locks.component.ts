@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AddLockComponent } from '../../Modals/add-lock/add-lock.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarService } from '../../Services/navbar.Service';
 
 @Component({
   selector: 'app-locks',
@@ -10,9 +11,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LocksComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
 
   ngOnInit() {
+    this.nav.show()
     this.get()
   }
 

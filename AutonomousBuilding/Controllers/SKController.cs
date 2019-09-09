@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/sk")]
   [ApiController]
   public class SKController : ControllerBase

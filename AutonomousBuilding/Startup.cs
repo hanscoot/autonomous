@@ -36,6 +36,7 @@ namespace AutonomousBuilding
         Services.AddScoped<ILogRepository, LogRepository>();
         Services.AddScoped<ILockTypeRepository, LockTypeRepository>();
         Services.AddScoped<IPersonRepository, PersonRepository>();
+        Services.AddScoped<IAccountRepository, AccountRepository>();
         Services.BuildServiceProvider().GetService<IDatabaseService>().RunMigrationScripts();
 
         // configure strongly typed settings objects
@@ -53,10 +54,11 @@ namespace AutonomousBuilding
         .AddJwtBearer(x =>
         {
             x.RequireHttpsMetadata = false;
+            x.IncludeErrorDetails = true;
             x.SaveToken = true;
             x.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuerSigningKey = true,
+                ValidateIssuerSigningKey = false,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = false

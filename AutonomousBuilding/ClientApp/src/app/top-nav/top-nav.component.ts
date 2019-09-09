@@ -22,6 +22,7 @@ export class TopNavComponent {
 
   logout() {
     this.authenticationService.logout();
+    this.nav.hide()
     this.router.navigate(['/login']);
   }
 

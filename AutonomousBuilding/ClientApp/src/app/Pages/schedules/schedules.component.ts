@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AddScheduleComponent } from '../../Modals/add-schedule/add-schedule.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { NavbarService } from '../../Services/navbar.Service';
 
 @Component({
   selector: 'app-schedules',
@@ -10,10 +12,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SchedulesComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
 
   ngOnInit() {
     this.get()
+    this.nav.show()
   }
 
   public serverData: ScheduleData[] = [];
@@ -26,8 +29,8 @@ export class SchedulesComponent implements OnInit {
   }
   //gets schedules
   get() {
-    this.http.get<ScheduleData[]>('/api/schedule/testdata').subscribe(data => this.serverData = data)
-  }
+    this.http.get<ScheduleData[]>('/api/schedule/testdata').subscribe(data =>
+      this.serverData = data )}
 }
 
 export class ScheduleData {

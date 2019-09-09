@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/test")]
     [ApiController]
     public class TestController : ControllerBase

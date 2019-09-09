@@ -7,16 +7,16 @@
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <div>
-    <h6>Name:</h6> {{person.name}}
+    <h6>Name:</h6> {{str.currentUser.name}}
     <div>&nbsp;</div>
-    <h6>Email:</h6> {{person.email}}
+    <h6>Email:</h6> {{str.currentUser.email}}
     <div>&nbsp;</div>
-    <h6>Password:</h6> {{repeatedString}}
+    <h6>Password:</h6> *********
     <div>&nbsp;</div>
-    <h6>Contact Number:</h6> {{person.number}}
+    <h6>Contact Number:</h6> {{str.currentUser.number}}
     <div>&nbsp;</div>
     <h6>Key assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of key">
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of keys">
       <li>
         {{i.keyID}}
       </li>
@@ -28,9 +28,9 @@
       </li>
     </ul>
     <h6>Schedules assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of sch">
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of schedules">
       <li>
-        {{i.days}} {{i.times}}
+        {{i.days}} {{i.times}} (Key ID {{i.keyID}})
       </li>
     </ul>
     <div>&nbsp;</div>

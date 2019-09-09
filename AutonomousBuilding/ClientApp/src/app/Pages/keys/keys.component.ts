@@ -15,6 +15,7 @@ export class KeysComponent implements OnInit {
   constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
 
   ngOnInit() {
+    this.nav.show()
     this.get();
   }
 

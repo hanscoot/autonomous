@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/locktype")]
     [ApiController]
     public class LockTypeController : ControllerBase

@@ -11,6 +11,7 @@ import { EditLockComponent } from '../../Modals/edit-lock/edit-lock.component';
 import { LockData } from '../locks/locks.component';
 import { Log } from '../logs/logs.component';
 import { AppComponent } from '../../app.component';
+import { NavbarService } from '../../Services/navbar.Service';
 
 
 
@@ -37,9 +38,12 @@ export class DetailsLocksComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
-    private datepipe: DatePipe, private log: AppComponent) { }
+    private datepipe: DatePipe, private log: AppComponent,
+    private nav: NavbarService
+  ) { }
 
   ngOnInit() {
+    this.nav.show()
     this.getlock().subscribe(data => { this.lock = data })
     this.getlocks();
     this.getall().subscribe(item => { this.serverData = item });

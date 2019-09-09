@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Log } from './Pages/logs/logs.component';
 import { NavbarService } from './Services/navbar.Service';
+import { TopNavComponent } from './top-nav/top-nav.component';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,13 @@ import { NavbarService } from './Services/navbar.Service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient, public nav: NavbarService) { }
+  constructor(private http: HttpClient, private nav: NavbarService, private str: TopNavComponent) { }
   
   ngOnInit() {
     this.gets()
     this.nav.hide()
   }
-  
+
   public shortlog: Log[] = [];
   public LOG: Log[] = [];
   //gets

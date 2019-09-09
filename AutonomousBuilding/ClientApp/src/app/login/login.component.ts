@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../Services/authentication.Service';
+import { NavbarService } from '../Services/navbar.Service';
 
 
 
@@ -18,10 +19,12 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationServices: AuthenticationService
+    private authenticationServices: AuthenticationService,
+    private nav: NavbarService
   ) { }
 
   ngOnInit() {
+    this.nav.hide()
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

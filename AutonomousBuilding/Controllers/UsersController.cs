@@ -5,9 +5,9 @@ using AutonomousBuilding.Services;
 
 namespace AutonomousBuilding.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
-    [Route("users")]
+    [Route("/api/users")]
     public class UsersController : ControllerBase
     {
         private IUserServices _userServices;
