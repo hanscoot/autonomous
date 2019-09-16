@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { take } from 'rxjs/operators';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TopNavComponent } from '../../top-nav/top-nav.component';
 import { Observable } from 'rxjs';
-import { TestData } from '../../Pages/people/people.component';
+import { UserInfo, TestData } from '../../Models/Models';
+import { LogService } from '../../Services/log.Service';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'my-auth-token'
+    'Content-Type': 'application/json'
   })
 };
 
@@ -19,191 +19,111 @@ const httpOptions = {
 })
 export class EditAccountComponent implements OnInit {
 
-  @Input() public items;
-
-  constructor(private http: HttpClient,
-    public activeModal: NgbActiveModal) { }
+  constructor(private http: HttpClient, public activeModal: NgbActiveModal, private str: TopNavComponent, private log: LogService) { }
 
   ngOnInit() {
-    this.getall().subscribe(item => { this.data = item })
-    this.get()
+    this.getuser().subscribe(data => { this.user = data })
   }
 
-  public data: TestData[] = [];
   public serverData: TestData;
+  public Data: TestData;
 
-  //get item data
-  get() {
-    let url = `/api/values/${this.items}`
-    this.http.get<TestData>(url).pipe(take(1)).subscribe(data => this.serverData = data);
-  }
-  //get person data
-  getall(): Observable<TestData[]> {
-    return this.http.get<TestData[]>('/api/values/testdata')
-  }
-  //edit person
-  ping: TestData
-  edit(one: string, two: string, three: number, four:string) {
-    let ping: TestData = new TestData();
-    if ((this.name(one) === "one") && (this.email(two) === "one") && (this.number(three) === "one") && (this.password(four) === "one")) {
-      this.activeModal.close()
-    }
-    ping = this.serverData;
-    if (this.name(one) === true) {
-      ping.name = one;
-    }
-    if (this.email(two) === true) {
-      ping.email = two + "@nomuda.com";
-    }
-    if (this.number(three) === true) {
-      ping.number = three;
-    }
-    if (this.password(four) === true) {
-      ping.password = four
-    }
-    if (((this.name(one) === true) || (this.name(one) === "one"))
-      && ((this.email(two) === true) || (this.email(two) === "one"))
-      && ((this.number(three) === true) || (this.number(three) === "one"))
-      && ((this.password(four) === true) || (this.password(four) === "one"))) {
-      let url = `/api/values/${ping.personId}`
-      this.http.put<TestData[]>(url, ping, httpOptions).subscribe(() => this.activeModal.close())
-    }
+  public user: UserInfo;
+  //gets current user data
+  getuser(): Observable<UserInfo> {
+    let id = this.str.currentUser.personId
+    let url = `/api/account/user/${id}`
+    return this.http.get<UserInfo>(url)
   }
 
-
-
-  //Checks whether name is valid
-  name(item: string) {
-    var total = 0
-    item = item.trim()
-    for (let i of this.data) {
-      if (item.toLowerCase() === i.name.toLowerCase()) {
-        total = total + 1
+  //updates data with checks
+  add(one, two, three) {
+    let url = `/api/values/user/${this.str.currentUser.personId}`
+    this.http.get<TestData>(url).subscribe(data => {
+      this.Data = data;
+      let serverData: TestData = new TestData();
+      serverData = this.Data
+      var item = this.log.get()
+      this.log.logout()
+      if (this.testemail(one) === true) {
+        serverData.email = one + "@nomuda.com"
+        item.push("Updated email - " + this.log.time())
       }
+      if (this.testpassword(three) === true) {
+        serverData.password = three
+        item.push("Updated password - " + this.log.time())
+      }
+      if (this.testnumber(two) === true) {
+        serverData.number = Number(two)
+        item.push("Updated number - " + this.log.time())
+      }
+      if (((this.testnumber(two) === "one") || (this.testnumber(two) === true)) && ((this.testnumber(two) === true) || (this.testnumber(two) === "one"))) {
+        let thisurl = `/api/values/${this.str.currentUser.personId}`
+        this.log.start(item)
+        this.http.put<TestData>(thisurl, serverData, httpOptions).subscribe(() => this.activeModal.close())
+      }
+    })
+  }
+
+  //Checks whether password is valid
+  testpassword(item) {
+    item = item.trim()
+    item = item.toString();
+    if (item === null) {//password unchanged
+      return 'one'
     }
-    if ((item !== "") && (total === 0)) {//name 
-      var element = document.getElementById("input1");
+    if (item.length >= 8) {//password changed to input
+      var element = document.getElementById("input3");
       element.classList.add("green");
       element.classList.remove("red");
-      var text = document.getElementById("result1");
+      var text = document.getElementById("result3");
       text.classList.add("text-success")
       text.classList.remove("text-danger")
       text.innerHTML = "Looking Good!"
       return true
     }
-    else {
-      if (total === 0) {//name stays the same
-        var element = document.getElementById("input1");
-        element.classList.add("green");
-        element.classList.remove("red");
-        var text = document.getElementById("result1");
-        text.classList.add("text-success")
-        text.classList.remove("text-danger")
-        text.innerHTML = `${this.serverData.name}`
-        return "one"
-      } else {//name must be re-entered
-        var element = document.getElementById("input1");
-        element.classList.add("red");
-        element.classList.remove("green");
-        var text = document.getElementById("result1");
-        text.classList.add("text-danger")
-        text.classList.remove("text-success")
-        text.innerHTML = "Invalid Input - There is already a person registered with that name"
-        return false
-      }
+    else {//password must be re-entered
+      document.getElementById("result3").innerHTML = "Your password wasn't long enough! (min length 8)"
+      var element = document.getElementById("input3");
+      element.classList.add("red");
+      element.classList.remove("green");
+      var text = document.getElementById("result3");
+      text.classList.add("text-danger")
+      text.classList.remove("text-success")
+      return false
     }
   }
-  //checks whether password is valid
-  password(item: string) {
-    var total = 0
-    item = item.trim()
-    for (let i of this.data) {
-      if (item.toLowerCase() === i.password.toLowerCase()) {
-        total = total + 1
-      }
-    }
-    if ((item !== "") && (total === 0)) {//email 
-      var element = document.getElementById("input4");
-      element.classList.add("green");
-      element.classList.remove("red");
-      var text = document.getElementById("result4");
-      text.classList.add("text-success")
-      text.classList.remove("text-danger")
-      text.innerHTML = "Looking Good!"
-      return true
-    }
-    else {
-      if (total === 0) {//password stays the same
-        var element = document.getElementById("input4");
-        element.classList.add("green");
-        element.classList.remove("red");
-        var text = document.getElementById("result4");
-        text.classList.add("text-success")
-        text.classList.remove("text-danger")
-        text.innerHTML = `${this.serverData.password}`
-        return "one"
-      }
-    }
-  }
+
   //Checks whether email is valid
-  email(item: string) {
-    var total = 0
+  testemail(item) {
     item = item.trim()
-    var ting = item
-    item = item + "@nomuda.com";
-    for (let i of this.data) {
-      if (item.toLowerCase() === i.email.toLowerCase()) {
-        total = total + 1
-      }
+    item = item.toString();
+    var email = item + "@nomuda.com"
+    if (email === "@nomuda.com" || email === this.user.email) {//email unchanged
+      return false
     }
-    if ((ting !== "") && (total === 0)) {//email changed to input
-      var element = document.getElementById("input2");
+    else {//email changed to input
+      var element = document.getElementById("input3");
       element.classList.add("green");
       element.classList.remove("red");
-      var text = document.getElementById("result2");
+      var text = document.getElementById("result3");
       text.classList.add("text-success")
       text.classList.remove("text-danger")
       text.innerHTML = "Looking Good!"
       return true
     }
-    else {
-      if (total === 0) {//email stays the same
-        var element = document.getElementById("input2");
-        element.classList.add("green");
-        element.classList.remove("red");
-        var text = document.getElementById("result2");
-        text.classList.add("text-success")
-        text.classList.remove("text-danger")
-        text.innerHTML = `${this.serverData.email}`
-        return "one"
-      } else {//email must be re-entered
-        var element = document.getElementById("input2");
-        element.classList.add("red");
-        element.classList.remove("green");
-        var text = document.getElementById("result2");
-        text.classList.add("text-danger")
-        text.classList.remove("text-success")
-        text.innerHTML = "Invalid Input - There is already a person registered with that email"
-        return false
-      }
-    }
   }
+
   //Checks whether number is valid
-  number(item) {
-    var total = 0
+  testnumber(item) {
     item = item.trim()
     item = Number(item)
     var num = item.toString();
     if (num !== "NaN") {
-      for (let i of this.data) {
-        if (item === i.number) {
-          total = total + 1
-        }
+      if (item === 0 || item === this.user.number) {//number unchanged
+        return 'one'
       }
-      if (item === 0) {//number unchanged
-        return "one"
-      }
-      if (total === 0) {//number changed to input
+      else {//number changed to input
         var element = document.getElementById("input3");
         element.classList.add("green");
         element.classList.remove("red");
@@ -212,16 +132,6 @@ export class EditAccountComponent implements OnInit {
         text.classList.remove("text-danger")
         text.innerHTML = "Looking Good!"
         return true
-      }
-      else {//number must be re-entered
-        var element = document.getElementById("input3");
-        element.classList.add("red")
-        element.classList.remove("greem")
-        var text = document.getElementById("result3");
-        text.classList.add("text-danger")
-        text.classList.remove("text-success")
-        text.innerHTML = "Invalid Input - There is already a person registered with that phone number"
-        return false
       }
     } else {//number must be re-entered
       document.getElementById("result3").innerHTML = "You didn't enter a number!"
@@ -234,5 +144,5 @@ export class EditAccountComponent implements OnInit {
       return false
     }
   }
-
 }
+

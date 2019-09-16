@@ -2,9 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs/operators';
-import { SK } from '../../Pages/details-schedules/details-schedules.component';
-import { ScheduleData } from '../../Pages/schedules/schedules.component';
-import { KeyData } from '../../Pages/keys/keys.component';
+import { SK, KeyData, ScheduleData, UserName } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,6 +23,8 @@ export class AddKeyScheduleComponent implements OnInit {
   public serverData: SK[] = [];
   public keys: KeyData[] = [];
   public schedule: ScheduleData;
+  public list: UserName;
+  public username: UserName[] = [];
 
   constructor(private http: HttpClient,
     public activeModal: NgbActiveModal, ) { }
@@ -34,7 +34,7 @@ export class AddKeyScheduleComponent implements OnInit {
   }
 
   //Reads input from the select (dropdown)
-  selectedItem: number = null;
+  selectedItem: string = null;
   selects(event: any) {
     this.selectedItem = event.target.value;
   }
@@ -52,7 +52,9 @@ export class AddKeyScheduleComponent implements OnInit {
     //adds new key
     let k: SK = new SK();
     k.scheduleID = this.items
-    k.keyID = this.selectedItem
+    let item = this.selectedItem.split(" ")
+    let thing = Number(item[0])
+    k.keyID = thing
     this.http.post<SK[]>(`/api/sk/test`, k, httpOptions).subscribe(() => this.activeModal.close());
 
   }
@@ -69,6 +71,16 @@ export class AddKeyScheduleComponent implements OnInit {
               this.keys = this.keys.filter(k => k !== j)
             }
           }
+        }
+        for (let l of this.keys) {//gets user information for the key
+          let urlkey = `/api/account/name/${l.keyID}`
+          this.http.get<UserName>(urlkey).subscribe(data => {
+            this.list = data;
+            if (this.list !== null) {
+              this.username.push(this.list)//remove key from other list if key is assigned to a user
+              this.keys = this.keys.filter(k => k.keyID !== l.keyID)
+            }
+          })
         }
       })
     })

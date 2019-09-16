@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NavbarService } from '../../Services/navbar.Service';
 import { AppComponent } from '../../app.component';
+import { Log } from '../../Models/Models';
 
 @Component({
   selector: 'app-logs',
@@ -64,13 +65,5 @@ export class LogsComponent implements OnInit {
       })
     }
   }
-
-
-}
-
-export class Log {
-  logID: number;
-  lockName: string;
-  name: string;
-  time: string;
+ 
 }

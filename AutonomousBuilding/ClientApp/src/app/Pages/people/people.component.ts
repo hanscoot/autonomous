@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AddPersonComponent } from '../../Modals/add-person/add-person.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarService } from '../../Services/navbar.Service';
+import { MobileService } from '../../Services/mobile.service';
+import { TestData } from '../../Models/Models';
 
 @Component({
   selector: 'app-people',
@@ -11,7 +13,7 @@ import { NavbarService } from '../../Services/navbar.Service';
 })
 export class PeopleComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService) { }
 
   ngOnInit() {
     this.nav.show()
@@ -30,15 +32,6 @@ export class PeopleComponent implements OnInit {
       this.get()
     })
   }
-
 }
 
-export class TestData {
-  personId: number;
-  name: string;
-  email: string;
-  number: number;
-  password: string;
-  clear: boolean;
-  token: string;
-}
+

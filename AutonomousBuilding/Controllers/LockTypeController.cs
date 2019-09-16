@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/locktype")]
     [ApiController]
     public class LockTypeController : ControllerBase
@@ -46,6 +46,13 @@ namespace AutonomousBuilding.Controllers
         public void Delete(int id)
         {
             lockTypeRepository.Del(id);
+        }
+
+        //GET via ID
+        [HttpGet("{id}")]
+        public LockType Get(int id)
+        {
+            return lockTypeRepository.Get(id);
         }
     }
 }

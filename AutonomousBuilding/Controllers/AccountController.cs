@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
+    [Authorize (AuthenticationSchemes = "Bearer")]
     [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -29,13 +29,23 @@ namespace AutonomousBuilding.Controllers
         {
             return accountRepository.GetLock(id);
         }
-        
+        //Gets all schedule's for that key id
         [HttpGet("schedule/{id}")]
         public UserSchedules[] Get(int id)
         {
             return accountRepository.Get(id);
         }
-
-
+        //Gets user info for that user id
+        [HttpGet("user/{id}")]
+        public UserInfo GetUser(int id)
+        {
+            return accountRepository.GetUser(id);
+        }
+        //Gets user info for that key id
+        [HttpGet("name/{id}")]
+        public UserName GetUsern(int id)
+        {
+            return accountRepository.GetUsername(id);
+        }
     }
 }

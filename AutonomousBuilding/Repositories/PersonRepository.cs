@@ -12,6 +12,7 @@ namespace AutonomousBuilding.Repositories
     {
         Task<IEnumerable<User>> GetUsers();
         User Find(string email);
+        User User(int id);
         void Post(User value);
         void Delete(int id);
         void Edit(User value);
@@ -35,7 +36,17 @@ namespace AutonomousBuilding.Repositories
                 return conn.Query<User>(sQuery, new { Email = email }).FirstOrDefault();
             }
         }
-        
+
+        public User User(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Password, People.Number, People.Clear FROM People" + " WHERE PersonId = @PersonId";
+                conn.Open();
+                return conn.Query<User>(sQuery, new { PersonId = id }).FirstOrDefault();
+            }
+        }
+
         public async Task<IEnumerable<User>> GetUsers()
         {
             using (var conn = new SqlConnection(this.connString))

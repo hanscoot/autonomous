@@ -11,19 +11,19 @@ using AutonomousBuilding.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace AutonomousBuilding.Services
+namespace AutonomousBuilding.service
 {
-    public interface IUserServices
+    public interface IUserservice
     {
         User Authenticate(string username, string password);
     }
 
-    public class UserServices : IUserServices
+    public class Userservice : IUserservice
     {
         private readonly AppSettings _appSettings;
         private readonly IPersonRepository personRepository;
 
-        public UserServices(IOptions<AppSettings> appSettings, IPersonRepository personRepository)
+        public Userservice(IOptions<AppSettings> appSettings, IPersonRepository personRepository)
         {
             _appSettings = appSettings.Value;
             this.personRepository = personRepository;
@@ -33,7 +33,7 @@ namespace AutonomousBuilding.Services
         {
             var user = personRepository.Find(username);
             // return null if user not found
-            if (user == null)
+            if ((user == null) || (user.Password != password) )
                 return null;
 
             // authentication successful so generate jwt token
@@ -53,6 +53,8 @@ namespace AutonomousBuilding.Services
 
             // remove password before returning
             user.Password = null;
+            user.Email = null;
+            user.Number = 0;
 
             return user;
         }

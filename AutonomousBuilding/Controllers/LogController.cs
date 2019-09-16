@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
     [Route("api/log")]
     [ApiController]
     public class LogController : ControllerBase

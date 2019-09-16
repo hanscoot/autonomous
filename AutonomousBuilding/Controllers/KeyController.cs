@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/keys")]
   [ApiController]
   public class KeyController : ControllerBase

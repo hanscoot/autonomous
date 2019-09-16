@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Guid } from 'guid-typescript';
-import { KeyData } from '../../Pages/keys/keys.component';
+import { KeyData, PK } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -30,11 +30,11 @@ export class AddKeyComponent implements OnInit {
   }
   //Standard Settings Times
   public types = [
-    "1 ",
-    "2 "
+    "1 - QR Code",
+    "2 - Barcode"
   ]
   //Reads what is selected from the dropdown
-  selectedItem: number = null;
+  selectedItem: string = '';
   select(event: any) {
     this.selectedItem = event.target.value;
   }
@@ -42,7 +42,8 @@ export class AddKeyComponent implements OnInit {
   Data: KeyData;
   Add() {
     let Data: KeyData = new KeyData();
-    Data.typeID = this.selectedItem;
+    this.selectedItem = this.selectedItem.slice(0,1)
+    Data.typeID = Number(this.selectedItem);
     Data.content = Guid.raw();
     console.log(Data.content)
     this.http.post<KeyData[]>('/api/keys/test', Data, httpOptions).subscribe(() => this.activeModal.close());

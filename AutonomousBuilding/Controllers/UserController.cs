@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/values")]
     [ApiController]
     public class UserController : ControllerBase
@@ -29,7 +29,13 @@ namespace AutonomousBuilding.Controllers
         {
             return personRepository.GetUser(id);
         }
-          
+
+        [HttpGet("user/{id}")]
+        public User GetUser(int id)
+        {
+            return personRepository.User(id);
+        }
+
         [HttpPost("test")]
         public void Post([FromBody] User value)
         {

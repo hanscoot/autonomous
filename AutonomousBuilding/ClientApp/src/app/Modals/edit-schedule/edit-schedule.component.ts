@@ -4,7 +4,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ScheduleData } from '../../Pages/schedules/schedules.component';
+import { ScheduleData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({

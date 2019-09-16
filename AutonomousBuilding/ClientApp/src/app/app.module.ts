@@ -6,6 +6,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
@@ -24,7 +25,6 @@ import { AddKeyScheduleComponent } from './Modals/padd-key-schedule/add-key-sche
 import { EditScheduleComponent } from './Modals/edit-schedule/edit-schedule.component';
 import { EditLockComponent } from './Modals/edit-lock/edit-lock.component';
 import { EditAccountComponent } from './Modals/edit-account/edit-account.component';
-import { HomeNonadminComponent } from './home-nonadmin (template only)/home-nonadmin.component';
 import { SchedulesComponent } from './Pages/schedules/schedules.component';
 import { LocksComponent } from './Pages/locks/locks.component';
 import { KeysComponent } from './Pages/keys/keys.component';
@@ -34,10 +34,13 @@ import { AccountComponent } from './Pages/account/account.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarService } from './Services/navbar.Service';
 import { AuthenticationService } from './Services/authentication.Service';
+import { LogService } from './Services/log.Service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AuthGuard } from './Guards/auth.guard';
 import { AccountGuard } from './Guards/account.guard';
+import { MobileService } from './Services/mobile.service';
+import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   { path: 'Account', component: AccountComponent, canActivate: [AccountGuard] },
@@ -49,7 +52,7 @@ const routes: Routes = [
   { path: 'people/:id', component: DetailsPeopleComponent, canActivate: [AuthGuard] },
   { path: 'lock/:id', component: DetailsLocksComponent, canActivate: [AuthGuard] },
   { path: 'schedule/:id', component: DetailsSchedulesComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'land', component: LandingComponent},
   { path: '', redirectTo: 'Schedules', pathMatch: 'full' }
 ];
 
@@ -71,7 +74,6 @@ const routes: Routes = [
     EditScheduleComponent,
     EditLockComponent,
     EditAccountComponent,
-    HomeNonadminComponent,
     SchedulesComponent,
     LocksComponent,
     KeysComponent,
@@ -79,6 +81,7 @@ const routes: Routes = [
     LogsComponent,
     AccountComponent,
     LoginComponent,
+    LandingComponent,
 
   ],
   imports: [
@@ -89,17 +92,18 @@ const routes: Routes = [
     DragDropModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    DeviceDetectorModule.forRoot(),
   ],
   providers: [NgbActiveModal, DetailsPeopleComponent, DetailsLocksComponent, DetailsSchedulesComponent,
-    NavbarService, AuthenticationService, HomeNonadminComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
-    LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent,
+    NavbarService, AuthenticationService, LogService, MobileService, AppComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
+    LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent, LandingComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [EditPersonComponent, AddPersonComponent, AddKeyComponent, EditLockComponent,
+  entryComponents: [EditPersonComponent, AddPersonComponent, TopNavComponent, AddKeyComponent, EditLockComponent,
     AddLockComponent, AddKeyPersonComponent, AddKeyLockComponent, AddScheduleComponent,
-    AddKeyScheduleComponent, EditScheduleComponent, EditAccountComponent]
+    AddKeyScheduleComponent, EditScheduleComponent, EditAccountComponent, LoginComponent]
 })
 export class AppModule { }

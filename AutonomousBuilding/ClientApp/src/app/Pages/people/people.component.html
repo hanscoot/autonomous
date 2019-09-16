@@ -11,7 +11,7 @@
       <thead>
         <tr>
           <th scope="col">Name</th>
-          <th scope="col">Email</th>
+          <th scope="col" *ngIf="!mode.tang">Email</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
           <th scope="row">
             {{item.name}}
           </th>
-          <th scope="row">
+          <th scope="row" *ngIf="!mode.tang">
             {{item.email}}
           </th>
           <th scope="row">

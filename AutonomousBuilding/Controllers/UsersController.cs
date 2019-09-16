@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AutonomousBuilding.Models;
-using AutonomousBuilding.Services;
+using AutonomousBuilding.service;
 
 namespace AutonomousBuilding.Controllers
 {
@@ -10,18 +10,18 @@ namespace AutonomousBuilding.Controllers
     [Route("/api/users")]
     public class UsersController : ControllerBase
     {
-        private IUserServices _userServices;
+        private IUserservice _userservice;
 
-        public UsersController(IUserServices userServices)
+        public UsersController(IUserservice userservice)
         {
-            _userServices = userServices;
+            _userservice = userservice;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]User userParam)
         {
-            var user = _userServices.Authenticate(userParam.Email, userParam.Password);
+            var user = _userservice.Authenticate(userParam.Email, userParam.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

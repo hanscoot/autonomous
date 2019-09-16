@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TestData } from '../Pages/people/people.component';
+import { TestData } from '../Models/Models';
+import { NavbarService } from './navbar.Service';
 
 
 
@@ -11,7 +12,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<TestData>;
   public currentUser: Observable<TestData>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private nav: NavbarService) {
     this.currentUserSubject = new BehaviorSubject<TestData>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -28,6 +29,7 @@ export class AuthenticationService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          this.nav.visible = true
         }
 
         return user;
@@ -35,8 +37,10 @@ export class AuthenticationService {
   }
 
   logout() {
+    localStorage.removeItem('currentLog');
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    this.nav.visible = false;
     this.currentUserSubject.next(null);
   }
 }

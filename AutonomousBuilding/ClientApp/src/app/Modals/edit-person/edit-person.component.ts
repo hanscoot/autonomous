@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { TestData } from '../../Pages/people/people.component';
+import { TestData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,34 +44,68 @@ export class EditPersonComponent implements OnInit {
     return this.http.get<TestData[]>('/api/values/testdata')
   }
   //edit person
-  ping: TestData 
-  edit(one: string, two: string, three: number) {
-    let ping: TestData = new TestData();
-    if ((this.name(one) === "one") && (this.email(two) === "one") && (this.number(three) === "one")) {
-      this.activeModal.close()
-    }
-    ping = this.serverData;
-    if (this.name(one) === true) {
-      ping.name = one;
-    }
-    if (this.email(two) === true) {
-      ping.email = two + "@nomuda.com";
-    }
-    if (this.number(three) === true) {
-      ping.number = three;
-    }
-    if (((this.name(one) === true) || (this.name(one) === "one"))
-      && ((this.email(two) === true) || (this.email(two) === "one"))
-      && ((this.number(three) === true) || (this.number(three) === "one"))) {
-      ping.clear = this.marked;
-      let url = `/api/values/${ping.personId}`
-      this.http.put<TestData[]>(url, ping, httpOptions).subscribe(() => this.activeModal.close())
-    }
+  Data: TestData
+  edit(one: string, two: string, three: number, four: string) {
+    let url = `/api/values/user/${this.items}`
+    this.http.get<TestData>(url).subscribe(data => {
+      this.Data = data;
+      let ping: TestData = new TestData();
+      ping = this.Data
+      if (this.name(one) === true) {
+        ping.name = one;
+      }
+      if (this.email(two) === true) {
+        ping.email = two + "@nomuda.com";
+      }
+      if (this.number(three) === true) {
+        ping.number = three;
+      }
+      if (this.testpassword(four) === true) {
+        ping.password = four;
+      }
+      if (((this.name(one) === true) || (this.name(one) === "one"))
+        && ((this.email(two) === true) || (this.email(two) === "one"))
+        && ((this.number(three) === true) || (this.number(three) === "one"))
+        && ((this.testpassword(four) === true) || (this.testpassword(four) === "one"))) {
+        ping.clear = this.marked;
+        let url = `/api/values/${ping.personId}`
+        this.http.put<TestData[]>(url, ping, httpOptions).subscribe(() => this.activeModal.close())
+      }
+    })   
   }
   //checkbox
   marked = false;
   check(e) {
     this.marked = e.target.checked
+  }
+
+  //Checks whether password is valid
+  testpassword(item) {
+    item = item.trim()
+    item = item.toString();
+    if (item === '') {//password unchanged
+      return 'one'
+    }
+    if (item.length >= 8) {//password changed to input
+      var element = document.getElementById("input4");
+      element.classList.add("green");
+      element.classList.remove("red");
+      var text = document.getElementById("result4");
+      text.classList.add("text-success")
+      text.classList.remove("text-danger")
+      text.innerHTML = "Looking Good!"
+      return true
+    }
+    else {//password must be re-entered
+      document.getElementById("result4").innerHTML = "Your password wasn't long enough! (min length 8)"
+      var element = document.getElementById("input4");
+      element.classList.add("red");
+      element.classList.remove("green");
+      var text = document.getElementById("result4");
+      text.classList.add("text-danger")
+      text.classList.remove("text-success")
+      return false
+    }
   }
 
   //Checks whether name is valid

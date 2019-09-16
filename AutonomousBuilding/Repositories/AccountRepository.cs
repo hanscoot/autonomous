@@ -13,6 +13,9 @@ namespace AutonomousBuilding.Repositories
         UserSchedules[] Get(int id);
         UserKeys[] GetKey(int id);
         UserLocks[] GetLock(int id);
+        UserInfo GetUser(int id);
+        UserName GetUsername(int id);
+
     }
 
     public class AccountRepository : IAccountRepository
@@ -49,6 +52,19 @@ namespace AutonomousBuilding.Repositories
             }
         }
 
+        public UserName GetUsername(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT People.Name, Keys.KeyID FROM PersonKeys" +
+                                " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +
+                                " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
+                                " WHERE PersonKeys.KeyID = @KeyID";
+                conn.Open();
+                return conn.Query<UserName>(sQuery, new { KeyID = id }).FirstOrDefault();
+            }
+        }
+
         public UserLocks[] GetLock(int id)
         {
             using (var conn = new SqlConnection(this.connString))
@@ -62,6 +78,15 @@ namespace AutonomousBuilding.Repositories
             }
         }
 
-
+        public UserInfo GetUser(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT People.Name, People.Email, People.Number FROM People" +
+                                " WHERE People.PersonId = @PersonId";
+                conn.Open();
+                return conn.Query<UserInfo>(sQuery, new { PersonId = id }).FirstOrDefault();
+            }
+        }
     }
 }

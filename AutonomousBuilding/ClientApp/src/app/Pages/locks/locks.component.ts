@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AddLockComponent } from '../../Modals/add-lock/add-lock.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarService } from '../../Services/navbar.Service';
+import { MobileService } from '../../Services/mobile.service';
+import { LockData } from '../../Models/Models';
 
 @Component({
   selector: 'app-locks',
@@ -11,7 +13,7 @@ import { NavbarService } from '../../Services/navbar.Service';
 })
 export class LocksComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService) { }
 
   ngOnInit() {
     this.nav.show()
@@ -32,9 +34,3 @@ export class LocksComponent implements OnInit {
   }
 }
 
-
-export class LockData {
-  lockID: number;
-  name: string;
-  lockTypeID: number;
-}

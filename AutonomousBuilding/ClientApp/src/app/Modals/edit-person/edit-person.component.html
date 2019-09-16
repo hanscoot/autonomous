@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="modal-header">
     <h4 class="modal-title">Edit Person - {{serverData.name}}</h4>
-    <button class="close blank" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button class="close blank" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -37,6 +37,14 @@
         <p class="text-danger" id="result3"></p>
         &nbsp;
       </div>
+      Password
+      <div class="input-group">
+        <input #password class="form-control" id="input4">
+      </div>
+      <div>
+        <p class="text-danger" id="result4"></p>
+        &nbsp;
+      </div>
       <div class="custom-control custom-checkbox custom-control-inline">
         <input class="custom-control-input" type="checkbox" value="" id="admin" (change)="check($event)">
         <label class="custom-control-label" for="admin">
@@ -47,7 +55,7 @@
         &nbsp;
       </div>
       <div>
-        <button class="btn btn-sm btn-primary float-right" (click)="edit(name.value, email.value, number.value)">Update Person</button>
+        <button class="btn btn-sm btn-primary float-right" (click)="edit(name.value, email.value, number.value, password.value)">Update Person</button>
       </div>
       <div>
         &nbsp;

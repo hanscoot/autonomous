@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ScheduleData } from '../../Pages/schedules/schedules.component';
+import { ScheduleData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -2,9 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { LockData } from '../../Pages/locks/locks.component';
+import { LockData, LockType } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,8 +20,10 @@ export class EditLockComponent implements OnInit {
 
   @Input() public items;
 
-  public serverData: LockData;
+  public serverData: LockData[] = [] ;
   public data: LockData[] = [];
+  public lock: LockType;
+  public thing: LockData;
  
 
   constructor(private http: HttpClient,
@@ -32,41 +32,130 @@ export class EditLockComponent implements OnInit {
 
   ngOnInit() {
     this.get()
-    this.getall().subscribe(item => { this.data = item })
+    this.gettype()
   }
   //Get lock information from database
   get() {
     let url = `/api/locks/${this.items}`
-    this.http.get<LockData>(url).pipe(take(1)).subscribe(data => this.serverData = data);
+    this.http.get<LockData[]>(url).subscribe(data => this.serverData = data)
   }
-  //get lock data
-  getall(): Observable<LockData[]> {
-    return this.http.get < LockData[]>('/api/locks/testdata')
+  gettype() {
+    let url = `/api/locks/${this.items}`
+    this.http.get<LockData>(url).subscribe(data => {
+      this.thing = data
+      let url = `/api/locktype/${this.thing.lockTypeID}`
+      this.http.get<LockType>(url).subscribe(data => this.lock = data)
+    })
   }
+
   //Adds Item to Database
   Data: LockData;
-  Add(item: string) {
-    var total = 0
-    item = item.trim()
-    for (let i of this.data) {
-      if (item.toLowerCase() === i.name.toLowerCase()) {
-        total += 1
-      }
-    }
-    if (item === "") {
-      this.activeModal.close()
-    }
-    if ((item !== "") && (total === 0)) {
+  Tings: LockType;
+  Add(item: string, one: string, two: string, three: string, four: string) {
+    if (this.name(item) === true) {
+      let url = `/api/locks/${this.thing.lockID}`
       let Data: LockData = new LockData();
-      Data = this.serverData;
-      Data.name = item;
-      let url = `/api/locks/${this.items}`
-      this.http.put<LockData[]>(url, Data, httpOptions).subscribe(() => this.activeModal.close());
+      Data = this.thing
+      Data.name = item.trim()
+      this.http.put<LockData>(url, Data, httpOptions).subscribe()
     }
-    else {
-      document.getElementById("demo").innerHTML = "Invalid Input - There is already a lock registered with that name"
-      var element = document.getElementById("id");
-      element.classList.add("red");
+    let url = `/api/locktype/${this.thing.lockTypeID}`
+    let Tings: LockType = new LockType();
+    Tings = this.lock
+    if (this.type(one) === true) {
+      Tings.type = one.trim()
+    }
+    if (this.ip(two) === true) {
+      Tings.iP = two.trim()
+    }
+    if (this.output(three) === true) {
+      Tings.outputPort = Number(three.trim())
+    }
+    if (this.delay(four) === true) {
+      Tings.delay = Number(four.trim()) * 1000
+    }
+    if ((this.type(one) === true) || (this.ip(two) === true) || (this.output(three) === true) || (this.delay(four) === true)) {
+      this.http.put<LockType>(url, Tings, httpOptions).subscribe(() => this.activeModal.close());
+    }
+    if ((this.type(one) === false) && (this.ip(two) === false) && (this.output(three) === false) && (this.delay(four) === false)) {
+      this.activeModal.close();
     }
   }
+
+  //Check whether type is valid
+  type(one: string) {
+    one.trim()
+    if (one != "") {
+      if (one != this.lock.type) {
+        return true
+      }
+      else {//unchanged
+        return false
+      }
+    }
+    else {//empty
+      return false
+    }
+  }
+  //Check whether ip is valid
+  ip(one: string) {
+    one.trim()
+    if (one != "") {
+      if (one != this.lock.iP) {
+        return true
+      }
+      else {//unchanged
+        return false
+      }
+    }
+    else {//empty
+      return false
+    }
+  }
+  //Check whether output is valid
+  output(one: string) {
+    one.trim()
+    if (one != "") {
+      if (one != (this.lock.outputPort).toString()) {
+        return true
+      }
+      else {//unchanged
+        return false
+      }
+    }
+    else {//empty
+      return false
+    }
+  }
+  //Check whether delay is valid
+  delay(one: string) {
+    one.trim()
+    if (one != "") {
+      if (one != (this.lock.delay).toString()) {
+        return true
+      }
+      else {//unchanged
+        return false
+      }
+    }
+    else {//empty
+      return false
+    }
+  }
+  //Check whether name is valid
+  name(item: string) {
+    item = item.trim()
+    if (item != "") {
+      if (item !== this.thing.name) {
+        return true
+      }
+      else {//unchanged
+        return false
+      }
+    }
+    else {//empty
+      return false
+    }
+  }
+
 }

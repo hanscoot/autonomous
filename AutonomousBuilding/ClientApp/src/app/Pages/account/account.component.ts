@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { NavbarService } from '../../Services/navbar.Service';
+import { EditAccountComponent } from '../../Modals/edit-account/edit-account.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TopNavComponent } from '../../top-nav/top-nav.component';
+import { UserInfo, UserKeys, UserLocks, UserSchedules } from '../../Models/Models';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-account',
@@ -11,17 +15,48 @@ import { TopNavComponent } from '../../top-nav/top-nav.component';
 })
 export class AccountComponent {
 
-  constructor(public nav: NavbarService, public str: TopNavComponent, private http: HttpClient) {
+  constructor(public nav: NavbarService, public str: TopNavComponent,
+    private http: HttpClient, private modalServices: NgbModal, private item: AppComponent)
+  {
     this.nav.show();
-    this.get()
+    this.getuserinfo();
+    this.get();
+    this.getuser();
   }
 
+  public users: UserInfo[] = [];
+  public user: UserInfo;
   public keys: UserKeys[] = [];
   public locks: UserLocks[] = [];
   public schedules: UserSchedules[] = [];
   public lock: UserLocks[] = [];
   public schedule: UserSchedules[] = [];
 
+  getuserinfo() {
+    let id = this.str.currentUser.personId
+    let url = `/api/account/user/${id}`
+    this.http.get<UserInfo[]>(url).subscribe(data => {
+      this.users = data;
+    })
+  }
+
+  //open edit-account modal
+  account() {
+    const modalRef = this.modalServices.open(EditAccountComponent);
+    modalRef.result.then(() => {
+      this.get()
+      this.getuser()
+      this.item.getlog()
+    })
+  }
+  //gets user data for the user logged in
+  getuser() {
+    let id = this.str.currentUser.personId
+    let url = `/api/account/user/${id}`
+    this.http.get<UserInfo>(url).subscribe(data => {
+      this.user = data;
+    })
+  }
   //gets key,lock and schedule data for the user logged in
   get() {
     let id = this.str.currentUser.personId
@@ -62,20 +97,27 @@ export class AccountComponent {
       }
     })
   }
-
-}
-
-export class UserKeys {
-  personId: number;
-  keyID: number;
-}
-export class UserLocks {
-  keyID: number;
-  name: string;
-}
-export class UserSchedules {
-  keyID: number;
-  scheduleID: number;
-  times: string;
-  days: string;
+  /*
+  tang: boolean
+  toggle() {
+    this.tang = !this.tang
+    if (this.tang === true) {
+      this.dark()
+    }
+    else {
+      this.light()
+    }
+  }
+  dark() {
+    var element = document.getElementById("example10");
+    element.classList.add("bg-dark", "text-light");
+    var item = document.getElementById("example2");
+    item.classList.remove("text-muted");
+  }
+  light() {
+    var element = document.getElementById("example10");
+    element.classList.remove("bg-dark", "text-light");
+    var item = document.getElementById("example2");
+    item.classList.add("text-muted");
+  }*/
 }

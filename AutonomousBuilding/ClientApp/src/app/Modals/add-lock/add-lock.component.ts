@@ -3,8 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LockType } from '../../Pages/details-locks/details-locks.component';
-import { LockData } from '../../Pages/locks/locks.component';
+import { LockData, LockType } from '../../Models/Models';
 
 
 const httpOptions = {
@@ -67,7 +66,8 @@ export class AddLockComponent implements OnInit {
       le.iP = two.trim()
       le.outputPort = Number(three.trim())
       le.delay = Number(four.trim()) * 1000
-      this.http.post('api/locktype/test', le, httpOptions).subscribe()
+      console.log(le)
+      this.http.post('/api/locktype/test', le, httpOptions).subscribe()
       setTimeout(() => {
         this.http.get<LockType[]>('/api/locktype/testdata').subscribe(data => {
           this.Dsata = data;
@@ -87,10 +87,10 @@ export class AddLockComponent implements OnInit {
             Data.name = item;
             Data.lockTypeID = identity
             this.http.post<LockData[]>('/api/locks/test', Data, httpOptions).subscribe(() => this.activeModal.close());
+
           })
         })
-      }, 500)
-    }
+      }, 500)}
   }
 
   //Checks whether name is valid

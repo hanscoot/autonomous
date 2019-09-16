@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutonomousBuilding.Controllers
 {
-    //[Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/sk")]
   [ApiController]
   public class SKController : ControllerBase
@@ -61,5 +61,13 @@ namespace AutonomousBuilding.Controllers
     {
             return scheduleKeyDataRepository.FindID(id);
     }
+
+    // GET api/pk/5
+    [HttpGet("get/sk/{id}")]
+    public ScheduleKey GetD(int id)
+    {
+        return scheduleKeyDataRepository.FindSchKey(id);
+    }
+
   }
 }

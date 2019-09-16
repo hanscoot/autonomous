@@ -8,10 +8,9 @@ import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { AddKeyLockComponent } from '../../Modals/padd-key-lock/add-key-lock.component';
 import { EditLockComponent } from '../../Modals/edit-lock/edit-lock.component';
-import { LockData } from '../locks/locks.component';
-import { Log } from '../logs/logs.component';
 import { AppComponent } from '../../app.component';
 import { NavbarService } from '../../Services/navbar.Service';
+import { LockType, LK, LockData, Log, UserName, LockKeyName } from '../../Models/Models';
 
 
 
@@ -35,6 +34,8 @@ export class DetailsLocksComponent implements OnInit {
   public serverData: LockType[] = [];
   public one: boolean = false;
   public tex: string = "Locked";
+  public list: UserName;
+  public username: UserName[] = [];
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
@@ -43,12 +44,22 @@ export class DetailsLocksComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.lockname()
     this.nav.show()
     this.getlock().subscribe(data => { this.lock = data })
     this.getlocks();
     this.getall().subscribe(item => { this.serverData = item });
     document.getElementById("status").innerHTML = this.tex;
   }
+
+  //getname
+  name: LockData[] = [];
+  lockname() {
+    let url = `/api/locks/${this.id}`
+    this.http.get<LockData[]>(url).subscribe(data => this.name = data)
+  }
+
+
 
   //LOGS ************************************************************
   //gets current date-time
@@ -129,6 +140,16 @@ export class DetailsLocksComponent implements OnInit {
           this.server = this.server.filter(k => k !== i)
         }
       }
+      for (let l of this.server) {//gets user information for the key
+        let urlkey = `/api/account/name/${l.keyID}`
+        this.http.get<UserName>(urlkey).subscribe(data => {
+          this.list = data;
+          if (this.list !== null) {
+            this.username.push(this.list)//remove key from other list if key is assigned to a user
+            this.server = this.server.filter(k => k.keyID !== l.keyID)
+          }
+        })
+      }
     });
   } 
   //deletes lock's key from lock key data
@@ -140,12 +161,28 @@ export class DetailsLocksComponent implements OnInit {
       this.server = this.server.filter(k => k !== item)
     }
   }
+  //deletes lock's key from lock key data
+  ids: LockKeyName;
+  removal(item: UserName) {
+    var m = confirm("Are you sure you want to delete this?")
+    if (m === true) {
+      let urlf = `/api/lk/lock/${item.keyID}`
+      this.http.get<LockKeyName>(urlf).subscribe(data => {
+        this.ids = data;
+        let url = `/api/lk/${this.ids.lockKeyID}`
+        this.http.delete<LK[]>(url).subscribe();
+        this.username = this.username.filter(k => k.keyID !== item.keyID)
+      })
+    }
+  }
   //opens modal to add key to specific lock
   open() {
     const modalRef = this.modalServices.open(AddKeyLockComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
+      this.lockname()
       this.getlock();
+      this.username = [];
       this.getlocks();
     });
   }
@@ -154,7 +191,9 @@ export class DetailsLocksComponent implements OnInit {
     const modalRef = this.modalServices.open(EditLockComponent)
     modalRef.componentInstance.items = this.id;
     modalRef.result.then(() => {
+      this.lockname()
       this.getlock();
+      this.username = [];
       this.getlocks();
     });
   }
@@ -179,21 +218,11 @@ export class DetailsLocksComponent implements OnInit {
       this.router.navigateByUrl('/Locks');
     }
   }
+
+  
 }
 
-export class LK {
-  lockKeyID: number;
-  lockID: number;
-  keyID: number;
-}
-export class LockType {
-  lockTypeID: number;
-  type: string;
-  iP: string;
-  outputPort: number;
-  inputPort: number;
-  delay: number;
-}
+
 
 
 

@@ -11,6 +11,7 @@
       <thead>
         <tr>
           <th scope="col">Name</th>
+          <th scope="col" *ngIf="!mode.tang">Status</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -18,6 +19,9 @@
         <tr *ngFor="let item of serverData">
           <th scope="row">
             {{item.name}}
+          </th>
+          <th scope="row" *ngIf="!mode.tang">
+            Locked
           </th>
           <th scope="row">
             <button class="btn btn-sm btn-light float-right" routerLink="/lock/{{item.lockID}}">Details</button>

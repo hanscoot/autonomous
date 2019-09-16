@@ -11,8 +11,8 @@
       <thead>
         <tr>
           <th scope="col">KeyID</th>
-          <th scope="col">Content</th>
-          <th scope="col">Person</th>
+          <th scope="col" *ngIf="!mode.tang">Content</th>
+          <th scope="col">User</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -21,7 +21,7 @@
           <th scope="row">
             {{item.keyID}}
           </th>
-          <th scope="row">
+          <th scope="row" *ngIf="!mode.tang">
             {{item.content}}
           </th>
           <th scope="row">
@@ -35,7 +35,7 @@
           <th scope="row">
             {{item.keyID}}
           </th>
-          <th scope="row">
+          <th scope="row" *ngIf="!mode.tang">
             {{item.content}}
           </th>
           <th scope="row">

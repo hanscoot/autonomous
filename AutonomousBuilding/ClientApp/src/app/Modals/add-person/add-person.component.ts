@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TestData } from '../../Pages/people/people.component';
+import { TestData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({

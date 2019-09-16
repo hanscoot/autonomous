@@ -16,9 +16,6 @@ h4 {
   right: 0;
 }
 
-.tab-title {
-  color: darkslategrey;
-}
 
 .bigArrow {
   width: 45px;
@@ -45,5 +42,26 @@ h4 {
   overflow: hidden;
   outline: none;
   background-repeat: no-repeat;
+}
+
+li.active a {
+  border-color: #f7f7f7;
+}
+
+.thing {
+  border-color: #f7f7f7;
+}
+
+.ent {
+  border-bottom-color: #f7f7f7
+}
+
+.nav-tabs {
+  display: inline-flex;
+}
+
+.nav-tabs li {
+  margin-right: 10px;
+  list-style-type: none;
 }
 

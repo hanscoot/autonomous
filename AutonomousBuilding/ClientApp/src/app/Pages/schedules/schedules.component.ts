@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AddScheduleComponent } from '../../Modals/add-schedule/add-schedule.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
 import { NavbarService } from '../../Services/navbar.Service';
+import { ScheduleData } from '../../Models/Models';
 
 @Component({
   selector: 'app-schedules',
@@ -30,12 +30,7 @@ export class SchedulesComponent implements OnInit {
   //gets schedules
   get() {
     this.http.get<ScheduleData[]>('/api/schedule/testdata').subscribe(data =>
-      this.serverData = data )}
+      this.serverData = data)
+  }
 }
 
-export class ScheduleData {
-  scheduleID: number;
-  times: string;
-  days: string;
-  number: number;
-}

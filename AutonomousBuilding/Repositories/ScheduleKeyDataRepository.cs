@@ -17,6 +17,7 @@ namespace AutonomousBuilding.Repositories
         ScheduleKey Find(int id);
         ScheduleKey FindID(int id);
         ScheduleKeyData FindKey(int id);
+        ScheduleKey FindSchKey(int id);
     }
 
     public class ScheduleKeyDataRepository : IScheduleKeyDataRepository
@@ -101,6 +102,19 @@ namespace AutonomousBuilding.Repositories
                                                     " WHERE ScheduleKeys.KeyID = @KeyID";
                 conn.Open();
                 return conn.Query<ScheduleKeyData>(sQuery, new { KeyID = id }).FirstOrDefault();
+            }
+        }
+        public ScheduleKey FindSchKey(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT ScheduleKeys.ScheduleKeyID, ScheduleKeys.KeyID, ScheduleKeys.ScheduleID" +
+                                                    " FROM ScheduleKeys" +
+                                                    " INNER JOIN Schedule ON Schedule.ScheduleID = ScheduleKeys.ScheduleID" +
+                                                    " INNER JOIN Keys ON Keys.KeyID = ScheduleKeys.KeyID" +
+                                                    " WHERE ScheduleKeys.KeyID = @KeyID";
+                conn.Open();
+                return conn.Query<ScheduleKey>(sQuery, new { KeyID = id }).FirstOrDefault();
             }
         }
     }

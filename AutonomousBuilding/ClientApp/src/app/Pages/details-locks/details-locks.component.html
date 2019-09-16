@@ -1,7 +1,7 @@
 <body style="padding-left:3%; padding-right:3%">
   <div>&nbsp;</div>
   <div>&nbsp;</div>
-  <h4>{{lock.name}} </h4>
+  <h4>{{name.name}} </h4>
   <h6 class="text-muted">DETAILS</h6>
   <div>
     <p class="text-muted" id="status"></p>
@@ -21,13 +21,28 @@
         <thead>
           <tr>
             <th scope="col">Keys</th>
+            <th scope="col">User</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+          <tr *ngFor="let i of username">
+            <th scope="row">
+              {{i.keyID}}
+            </th>
+            <th scope="row">
+              {{i.name}}
+            </th>
+            <th scope="row">
+              <button class="btn btn-sm btn-outline-primary float-right" (click)="removal(i)">Remove Key</button>
+            </th>
+          </tr>
           <tr *ngFor="let i of server">
             <th scope="row">
               {{i.keyID}}
+            </th>
+            <th scope="row">
+              Not Assigned
             </th>
             <th scope="row">
               <button class="btn btn-sm btn-outline-primary float-right" (click)="remove(i)">Remove Key</button>

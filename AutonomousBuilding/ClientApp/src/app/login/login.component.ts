@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../Services/authentication.Service';
 import { NavbarService } from '../Services/navbar.Service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MobileService } from '../Services/mobile.service';
+import { LogService } from '../Services/log.Service';
 
 
 
@@ -20,7 +23,10 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationServices: AuthenticationService,
-    private nav: NavbarService
+    private nav: NavbarService,
+    private activeModal: NgbActiveModal,
+    private mode: MobileService,
+    private user: LogService,
   ) { }
 
   ngOnInit() {
@@ -53,7 +59,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          let item = []
+          item[0] = "Logged in  - " + this.user.time()
+          this.user.start(item)
           this.router.navigate([this.returnUrl]);
+          this.activeModal.close()
         },
         error => {
           this.error = error;

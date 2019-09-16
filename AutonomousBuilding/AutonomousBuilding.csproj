@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>ed42ac61-b994-4b03-aa20-a8964a5967f3</UserSecretsId>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
     <None Remove="ClientApp\src\app\Guards\auth.guard.ts" />
     <None Remove="ClientApp\src\app\Interceptors\error.interceptor.ts" />
     <None Remove="ClientApp\src\app\Interceptors\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\Models\Models.ts" />
     <None Remove="ClientApp\src\app\Services\authentication.Services.ts" />
   </ItemGroup>
 
@@ -49,6 +51,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\Guards\auth.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptors\error.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Interceptors\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\Models\Models.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
 </Project>

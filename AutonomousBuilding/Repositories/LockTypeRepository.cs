@@ -15,6 +15,7 @@ namespace AutonomousBuilding.Repositories
         void Test(LockType value);
         void Del(int id);
         void Edit(LockType value);
+        LockType Get(int id);
     }
 
     public class LockTypeRepository : ILockTypeRepository
@@ -65,6 +66,16 @@ namespace AutonomousBuilding.Repositories
                                + " WHERE LockTypeID = @LockTypeID";
                 conn.Open();
                 conn.Query(sQuery, value);
+            }
+        }
+
+        public LockType Get(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT * FROM LockType" + " WHERE LockTypeID = @LockTypeID";
+                conn.Open();
+                return conn.Query<LockType>(sQuery, new { LockTypeID = id }).FirstOrDefault();
             }
         }
     }

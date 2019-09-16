@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { AddKeyComponent } from '../../Modals/add-key/add-key.component';
 import { NavbarService } from '../../Services/navbar.Service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MobileService } from '../../Services/mobile.service';
+import { KPD, KeyData } from '../../Models/Models';
 
 @Component({
   selector: 'app-keys',
@@ -12,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class KeysComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService) { }
 
   ngOnInit() {
     this.nav.show()
@@ -20,11 +22,11 @@ export class KeysComponent implements OnInit {
   }
 
   public serverData: KeyData[] = [];
-  public keypersonData: KP[] = [];
+  public keypersonData: KPD[] = [];
 
   //gets key data (and person data)
   get() {
-    this.http.get<KP[]>('/api/pk/data').subscribe(data => {
+    this.http.get<KPD[]>('/api/pk/data').subscribe(data => {
       this.keypersonData = data;
       this.http.get<KeyData[]>('/api/keys/testdata').subscribe(item => {
         this.serverData = item;
@@ -54,16 +56,4 @@ export class KeysComponent implements OnInit {
       this.http.delete<KeyData[]>(url).subscribe();
     }
   }
-}
-
-export class KP {
-  name: string;
-  keyID: number;
-  content: string;
-}
-
-export class KeyData {
-  keyID: number;
-  typeID: number;
-  content: string;
 }

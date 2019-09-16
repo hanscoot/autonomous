@@ -3,9 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { take } from 'rxjs/operators';
-import { KeyData } from '../../Pages/keys/keys.component';
-import { TestData } from '../../Pages/people/people.component';
-import { PK } from '../../Pages/details-people/details-people.component';
+import { PK, KeyData, TestData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({

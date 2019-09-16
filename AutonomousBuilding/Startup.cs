@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using AutonomousBuilding.Models;
 using AutonomousBuilding.Repositories;
-using AutonomousBuilding.Services;
+using AutonomousBuilding.service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,32 +21,32 @@ namespace AutonomousBuilding
 
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add Services to the container.
-    public void ConfigureServices(IServiceCollection Services)
+    // This method gets called by the runtime. Use this method to add service to the container.
+    public void ConfigureServices(IServiceCollection service)
     {
-        Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        Services.AddScoped<IDatabaseService, DatabaseService>();
-        Services.AddScoped<IKeyDataRepository, KeyDataRepository>();
-        Services.AddScoped<ILockDataRepository, LockDataRepository>();
-        Services.AddScoped<IPersonKeyDataRepository, PersonKeyDataRepository>();
-        Services.AddScoped<ILockKeyDataRepository, LockKeyDataRepository>();
-        Services.AddScoped<IScheduleDataRepository, ScheduleDataRepository>();
-        Services.AddScoped<IScheduleKeyDataRepository, ScheduleKeyDataRepository>();
-        Services.AddScoped<IBrainBoxRepository, BrainBoxRepository > ();
-        Services.AddScoped<ILogRepository, LogRepository>();
-        Services.AddScoped<ILockTypeRepository, LockTypeRepository>();
-        Services.AddScoped<IPersonRepository, PersonRepository>();
-        Services.AddScoped<IAccountRepository, AccountRepository>();
-        Services.BuildServiceProvider().GetService<IDatabaseService>().RunMigrationScripts();
+        service.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        service.AddScoped<IDatabaseService, DatabaseService>();
+        service.AddScoped<IKeyDataRepository, KeyDataRepository>();
+        service.AddScoped<ILockDataRepository, LockDataRepository>();
+        service.AddScoped<IPersonKeyDataRepository, PersonKeyDataRepository>();
+        service.AddScoped<ILockKeyDataRepository, LockKeyDataRepository>();
+        service.AddScoped<IScheduleDataRepository, ScheduleDataRepository>();
+        service.AddScoped<IScheduleKeyDataRepository, ScheduleKeyDataRepository>();
+        service.AddScoped<IBrainBoxRepository, BrainBoxRepository > ();
+        service.AddScoped<ILogRepository, LogRepository>();
+        service.AddScoped<ILockTypeRepository, LockTypeRepository>();
+        service.AddScoped<IPersonRepository, PersonRepository>();
+        service.AddScoped<IAccountRepository, AccountRepository>();
+        service.BuildServiceProvider().GetService<IDatabaseService>().RunMigrationScripts();
 
         // configure strongly typed settings objects
         var appSettingsSection = Configuration.GetSection("AppSettings");
-        Services.Configure<AppSettings>(appSettingsSection);
+        service.Configure<AppSettings>(appSettingsSection);
 
         // configure jwt authentication
         var appSettings = appSettingsSection.Get<AppSettings>();
         var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-        Services.AddAuthentication(x =>
+        service.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -65,8 +65,8 @@ namespace AutonomousBuilding
             };
         });
 
-        // configure DI for application Services
-        Services.AddScoped<IUserServices, UserServices>();
+        // configure DI for application service
+        service.AddScoped<IUserservice, Userservice>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

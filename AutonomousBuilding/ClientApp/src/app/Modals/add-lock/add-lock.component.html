@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="modal-header">
     <h4 class="modal-title">Add New Lock</h4>
-    <button class="close blank" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button class="close blank" aria-label="Close" (click)="activeModal.close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -21,7 +21,7 @@
       <p class="text-danger" id="one"></p>
       &nbsp;
     </div>
-    <label for="ip">IP Adress</label>
+    <label for="ip">IP Address</label>
     <input #ip class="form-control form-control-sm shadow-none" id="ip" placeholder="Enter IP">
     <div>
       <p class="text-danger" id="two"></p>

@@ -10,8 +10,7 @@ import { NavbarService } from '../../Services/navbar.Service';
 import { Observable } from 'rxjs';
 import { AddKeyPersonComponent } from '../../Modals/padd-key-person/add-key-person.component';
 import { EditPersonComponent } from '../../Modals/edit-person/edit-person.component';
-import { TestData } from '../people/people.component';
-import { Log } from '../logs/logs.component';
+import { PK, TestData } from '../../Models/Models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -100,11 +99,7 @@ export class DetailsPeopleComponent implements OnInit {
       this.router.navigateByUrl('/People');
     }
   }
+  
 }
 
 
-export class PK {
-  personKeyID: number;
-  personID: number;
-  keyID: number;
-}
