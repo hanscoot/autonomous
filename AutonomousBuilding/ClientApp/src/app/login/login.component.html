@@ -1,28 +1,6 @@
 <div class="modal-content">
   <div class="modal-body">
-    <div style="padding:3%" *ngIf="!mode.tang">
-      <div class="alert alert-info" style="width:auto">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                (Admin) <br />
-                Username: admin@nomuda.com<br />
-                Password: nomuda
-              </th>
-              <th>
-              </th>
-              <th>
-                (Non-admin) <br />
-                Username: user@nomuda.com <br />
-                Password: nomuda
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-    </div>
-    <div style="padding-top:3%">
+    <div style="padding-top:5%">
       <h6 class="font-weight-light h4" style="text-align:center">Autonomous Building</h6>
       <div style="padding-top:10%; padding-left:3%; padding-right:3%">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
