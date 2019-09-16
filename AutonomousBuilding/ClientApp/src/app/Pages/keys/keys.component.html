@@ -14,6 +14,7 @@
           <th scope="col" *ngIf="!mode.tang">Content</th>
           <th scope="col">User</th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,10 @@
           </th>
           <th scope="row">
             {{item.name}}
+          </th>
+          <th scope="row" *ngIf="!mode.tang">
+            <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="item.content">
+            </ngx-qrcode>
           </th>
           <th scope="row">
             <button class="btn btn-sm btn-dark float-right" (click)="del(item)">Delete</button>
@@ -40,6 +45,10 @@
           </th>
           <th scope="row">
             Not assigned
+          </th>
+          <th scope="row" *ngIf="!mode.tang">
+            <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="item.content">
+            </ngx-qrcode>
           </th>
           <th scope="row">
             <button class="btn btn-sm btn-dark float-right" (click)="del(item)">Delete</button>

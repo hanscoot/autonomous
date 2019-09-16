@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -86,6 +87,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    NgxQRCodeModule,
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
     NgbModule,

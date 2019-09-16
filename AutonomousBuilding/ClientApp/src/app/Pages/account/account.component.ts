@@ -15,6 +15,7 @@ import { AppComponent } from '../../app.component';
 })
 export class AccountComponent {
 
+
   constructor(public nav: NavbarService, public str: TopNavComponent,
     private http: HttpClient, private modalServices: NgbModal, private item: AppComponent)
   {
