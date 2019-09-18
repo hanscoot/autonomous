@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutonomousBuilding.Models;
 using AutonomousBuilding.Repositories;
@@ -30,6 +28,12 @@ namespace AutonomousBuilding.Controllers
         public User Get(int id)
         {
             return personRepository.GetUser(id);
+        }
+
+        [HttpGet("email/{email}")]
+        public User Gt(string email)
+        {
+            return personRepository.Find(email);
         }
 
         [HttpGet("user/{id}")]

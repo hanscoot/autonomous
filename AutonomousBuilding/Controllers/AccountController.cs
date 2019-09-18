@@ -31,9 +31,15 @@ namespace AutonomousBuilding.Controllers
         }
         //Gets all schedule's for that key id
         [HttpGet("schedule/{id}")]
-        public UserSchedules[] Get(int id)
+        public UserSchedules Get(int id)
         {
             return accountRepository.Get(id);
+        }
+        //Gets all schedule's for that key id
+        [HttpGet("schedules/{id}")]
+        public UserSchedules[] Gets(int id)
+        {
+            return accountRepository.Getsch(id);
         }
         //Gets user info for that user id
         [HttpGet("user/{id}")]
@@ -46,6 +52,25 @@ namespace AutonomousBuilding.Controllers
         public UserName GetUsern(int id)
         {
             return accountRepository.GetUsername(id);
+        }
+        //Gets all key name's for that lock id
+        [HttpGet("locks/{id}")]
+        public UserLocks[] GetKeyLock(int id)
+        {
+            return accountRepository.GetKeyLock(id);
+        }
+
+        //Gets all users name's for that key id
+        [HttpGet("keys/{id}")]
+        public QR GetUKey(int id)
+        {
+            return accountRepository.GetUKey(id);
+        }
+        //Gets all lock name's for that key id
+        [HttpGet("lockkey/{id}")]
+        public Locks[] GetsLock(int id)
+        {
+            return accountRepository.GetLocks(id);
         }
     }
 }

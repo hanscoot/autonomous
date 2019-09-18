@@ -1,0 +1,49 @@
+<body style="padding-top:5%;">
+  <div *ngIf="mode.tang">
+    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group" *ngFor="let item of list">
+      <button type="button" class="btn btn-secondary" (click)="open(item)">{{item.name}}</button>
+    </div>
+    <div class="grid grid-pad" style="padding-top:20%">
+      <a *ngFor="let item of list, let i = index" class="col-1-2">
+        <div class="btn-group-vertical">
+          <button class="blank module hero" id="{{i}}" (click)="func(i, item)">
+            {{item.name}} <p id="demo{{i}}"></p>
+          </button>
+          <button class="btn btn-light smfont">
+            {{item.days}} - {{item.times}}
+          </button>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div *ngIf="!mode.tang">
+    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group" *ngFor="let item of list">
+      <button type="button" class="btn btn-secondary" (click)="open(item)">{{item.name}}</button>
+    </div>
+    <div class="grid grid-pad" style="padding-top:5%" *ngIf="!str.currentUser.temp">
+      <a *ngFor="let item of list, let i = index" class="col-1-4">
+        <div class="btn-group-vertical">
+          <button class="blank module hero" id="{{i}}" (click)="func(i, item)">
+            {{item.name}} <p id="demo{{i}}"></p>
+          </button>
+          <button class="btn btn-light smfont">
+            {{item.days}} - {{item.times}}
+          </button>
+        </div>
+      </a>
+    </div>
+    <div class="grid grid-pad" style="padding-top:5%" *ngIf="str.currentUser.temp">
+      <a *ngFor="let item of serverData, let i = index" class="col-1-4">
+        <div class="btn-group-vertical">
+          <button class="blank module hero" id="{{i}}" (click)="funct(i, item)">
+            {{item.name}} <p id="demo{{i}}"></p>
+          </button>
+          <button class="btn btn-light smfont">
+            {{tempuser.date}}:{{tempuser.time}}
+          </button>
+        </div>
+      </a>
+    </div>
+  </div>
+</body>
+

@@ -31,7 +31,7 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Password, People.Number, People.Clear FROM People" + " WHERE Email = @Email";
+                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Password, People.Number, People.Clear, People.Temp FROM People" + " WHERE Email = @Email";
                 conn.Open();
                 return conn.Query<User>(sQuery, new { Email = email }).FirstOrDefault();
             }
@@ -41,7 +41,7 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Password, People.Number, People.Clear FROM People" + " WHERE PersonId = @PersonId";
+                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Password, People.Number, People.Clear, People.Temp FROM People" + " WHERE PersonId = @PersonId";
                 conn.Open();
                 return conn.Query<User>(sQuery, new { PersonId = id }).FirstOrDefault();
             }
@@ -52,7 +52,7 @@ namespace AutonomousBuilding.Repositories
             using (var conn = new SqlConnection(this.connString))
             {
                 await conn.OpenAsync();
-                return await conn.QueryAsync<User>("SELECT People.PersonId, People.Name, People.Email, People.Number, People.Clear FROM People");
+                return await conn.QueryAsync<User>("SELECT People.PersonId, People.Name, People.Email, People.Number, People.Clear, People.Temp FROM People");
             }
         }
 
@@ -60,8 +60,8 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "INSERT INTO People (Name, Email, Number, Password, Clear)"
-                                + " VALUES(@Name, @Email, @Number, @Password, @Clear)";
+                string sQuery = "INSERT INTO People (Name, Email, Number, Password, Clear, Temp)"
+                                + " VALUES(@Name, @Email, @Number, @Password, @Clear, @Temp)";
                 conn.Open();
                 conn.Execute(sQuery, value);
             }
@@ -82,7 +82,7 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "UPDATE People SET Name = @Name, Email = @Email, Number = @Number, Password = @Password, Clear = @Clear"
+                string sQuery = "UPDATE People SET Name = @Name, Email = @Email, Number = @Number, Password = @Password, Clear = @Clear, Temp = @Temp"
                                + " WHERE PersonId = @PersonId";
                 conn.Open();
                 conn.Query(sQuery, value);
@@ -93,7 +93,7 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Number, People.Clear FROM People"
+                string sQuery = "SELECT People.PersonId, People.Name, People.Email, People.Number, People.Clear, People.Temp FROM People"
                                 + " WHERE PersonId = @PersonId";
                 conn.Open();
                 return conn.Query<User>(sQuery, new { PersonId = id }).FirstOrDefault();

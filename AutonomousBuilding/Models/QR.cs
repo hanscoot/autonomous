@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace AutonomousBuilding.Models
 {
-    public class UserName
+    public class QR
     {
-        public string Name { get; set; }
-        public bool Temp { get; set; }
+        public int PersonID { get; set; }
         public int KeyID { get; set; }
+        public string Content { get; set; }
     }
 }

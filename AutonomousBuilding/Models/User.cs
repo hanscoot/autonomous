@@ -13,6 +13,7 @@ namespace AutonomousBuilding.Models
         public string Password { get; set; }
         public int Number { get; set; }
         public bool Clear { get; set; }
+        public bool Temp { get; set; }
         public string Token { get; set; }
     }
 }

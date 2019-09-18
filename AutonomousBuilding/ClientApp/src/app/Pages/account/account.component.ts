@@ -5,7 +5,7 @@ import { NavbarService } from '../../Services/navbar.Service';
 import { EditAccountComponent } from '../../Modals/edit-account/edit-account.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TopNavComponent } from '../../top-nav/top-nav.component';
-import { UserInfo, UserKeys, UserLocks, UserSchedules } from '../../Models/Models';
+import { UserInfo, UserKeys, UserLocks, UserSchedules, OneTime } from '../../Models/Models';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -15,7 +15,6 @@ import { AppComponent } from '../../app.component';
 })
 export class AccountComponent {
 
-
   constructor(public nav: NavbarService, public str: TopNavComponent,
     private http: HttpClient, private modalServices: NgbModal, private item: AppComponent)
   {
@@ -23,6 +22,7 @@ export class AccountComponent {
     this.getuserinfo();
     this.get();
     this.getuser();
+    this.getone();
   }
 
   public users: UserInfo[] = [];
@@ -40,7 +40,11 @@ export class AccountComponent {
       this.users = data;
     })
   }
-
+  //get onetimeuser info
+  tempuser: OneTime[] =[]
+  getone() {
+    this.http.get<OneTime[]>(`/api/onetime/${this.str.currentUser.personId}`).subscribe(data => { this.tempuser = data })
+  }
   //open edit-account modal
   account() {
     const modalRef = this.modalServices.open(EditAccountComponent);
@@ -80,7 +84,7 @@ export class AccountComponent {
             }
           }
         })
-        let schedule_url = `/api/account/schedule/${i.keyID}`
+        let schedule_url = `/api/account/schedules/${i.keyID}`
         this.http.get<UserSchedules[]>(schedule_url).subscribe(data => {//gets schedule data
           this.schedule = data;
           for (let j of this.schedule) {

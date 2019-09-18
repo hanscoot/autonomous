@@ -11,6 +11,7 @@ import { EditLockComponent } from '../../Modals/edit-lock/edit-lock.component';
 import { AppComponent } from '../../app.component';
 import { NavbarService } from '../../Services/navbar.Service';
 import { LockType, LK, LockData, Log, UserName, LockKeyName } from '../../Models/Models';
+import { TopNavComponent } from '../../top-nav/top-nav.component';
 
 
 
@@ -40,7 +41,7 @@ export class DetailsLocksComponent implements OnInit {
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
     private datepipe: DatePipe, private log: AppComponent,
-    private nav: NavbarService
+    private nav: NavbarService, public str: TopNavComponent
   ) { }
 
   ngOnInit() {
@@ -76,10 +77,11 @@ export class DetailsLocksComponent implements OnInit {
   lg() {
     let logs: Log = new Log()
     logs.time = this.time()
-    logs.name = 'Admin'
+    logs.name = this.str.currentUser.name
     this.getlock().subscribe(data => {
       this.lock = data;
       logs.lockName = this.lock.name
+      logs.status = "Success"
       this.http.post<Log>('/api/log/test', logs, httpOptions).subscribe()
       this.LOG.unshift(logs)
       this.log.gets()
@@ -211,7 +213,7 @@ export class DetailsLocksComponent implements OnInit {
       this.http.get<LockData>(url).subscribe(data => {
         this.item = data
         let p = this.item.lockTypeID
-        let urrl = `api/locktype/${p}`
+        let urrl = `/api/locktype/${p}`
         this.http.delete<LockType>(urrl).subscribe()
       })
       this.http.delete<LockData[]>(url).subscribe();

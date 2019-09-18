@@ -45,7 +45,7 @@ namespace AutonomousBuilding.Repositories
             using (var conn = new SqlConnection(this.connString))
             {
                 await conn.OpenAsync();
-                return await conn.QueryAsync<KeyPerson>("SELECT People.Name, PersonKeys.KeyID, Keys.Content" +
+                return await conn.QueryAsync<KeyPerson>("SELECT People.Name, People.Temp, PersonKeys.KeyID, Keys.Content" +
                                                     " FROM PersonKeys" +
                                                     " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
                                                     " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID");

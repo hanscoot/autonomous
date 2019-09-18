@@ -37,6 +37,7 @@ namespace AutonomousBuilding
         service.AddScoped<ILockTypeRepository, LockTypeRepository>();
         service.AddScoped<IPersonRepository, PersonRepository>();
         service.AddScoped<IAccountRepository, AccountRepository>();
+        service.AddScoped<IOneTimeRepository, OneTimeRepository>();
         service.BuildServiceProvider().GetService<IDatabaseService>().RunMigrationScripts();
 
         // configure strongly typed settings objects

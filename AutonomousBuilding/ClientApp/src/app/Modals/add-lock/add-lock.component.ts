@@ -66,7 +66,6 @@ export class AddLockComponent implements OnInit {
       le.iP = two.trim()
       le.outputPort = Number(three.trim())
       le.delay = Number(four.trim()) * 1000
-      console.log(le)
       this.http.post('/api/locktype/test', le, httpOptions).subscribe()
       setTimeout(() => {
         this.http.get<LockType[]>('/api/locktype/testdata').subscribe(data => {
@@ -80,9 +79,7 @@ export class AddLockComponent implements OnInit {
                 }
               }
             }
-            console.log(this.Dsata)
             let identity = this.Dsata[0].lockTypeID
-            console.log(identity)
             let Data: LockData = new LockData();
             Data.name = item;
             Data.lockTypeID = identity

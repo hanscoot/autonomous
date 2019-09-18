@@ -2,6 +2,18 @@
 <body class="" id="example1" style="padding-top: 5%; padding-left: 5%; padding-right: 5%; padding-bottom:5%">
   <h5 class="display-4" id="example2" *ngIf="nav.visible">
     Autonomous Building
+    <div ngbDropdown class="d-inline-block float-right" placement="left" *ngIf="mode.tang">
+      <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle></button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <a ngbDropdownItem routerLink="/Dashboard" routerLinkActive="active">Dashboard</a>
+        <a ngbDropdownItem routerLink="/Schedules" routerLinkActive="active" *ngIf="str.currentUser.clear">Schedules</a>
+        <a ngbDropdownItem routerLink="/Locks" routerLinkActive="active" *ngIf="str.currentUser.clear">Locks</a>
+        <a ngbDropdownItem routerLink="/Keys" routerLinkActive="active" *ngIf="str.currentUser.clear">Keys</a>
+        <a ngbDropdownItem routerLink="/People" routerLinkActive="active" *ngIf="str.currentUser.clear">People</a>
+        <a ngbDropdownItem routerLink="/Logs" routerLinkActive="active" *ngIf="str.currentUser.clear">Logs</a>
+        <a ngbDropdownItem routerLink="/Account" routerLinkActive="active">Account</a>
+      </div>
+    </div>
   </h5>
   <div>
     &nbsp;
@@ -15,7 +27,7 @@
             <div class="card-body scroll">
               <ul style="list-style: none; padding-left: 0;" *ngFor="let i of shortlog">
                 <li>
-                  {{i.lockName}} - {{i.time}} - {{i.name}}
+                  {{i.lockName}} - {{i.time}} - {{i.name}} - {{i.status}}
                 </li>
               </ul>
             </div>
@@ -35,28 +47,6 @@
     </div>
     <div class="col-md-9">
       <div *ngIf="nav.visible">
-        <!--for mobile view-->
-        <ul class="nav nav-tabs nav-tabs-sm nav-fill" style="padding-top:5%; width:100%;" *ngIf="mode.tang">
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example6" routerLink="/Schedules" routerLinkActive="active">Schedules</a>
-          </li>
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example7" routerLink="/Locks" routerLinkActive="active">Locks</a>
-          </li>
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example8" routerLink="/Keys" routerLinkActive="active">Keys</a>
-          </li>
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example9" routerLink="/People" routerLinkActive="active">People</a>
-          </li>
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example11" routerLink="/Logs" routerLinkActive="active">Logs</a>
-          </li>
-          <li class="nav-item" *ngIf="str.currentUser.clear">
-            <a class="nav-link" id="example12" routerLink="/Account" routerLinkActive="active">Account</a>
-          </li>
-        </ul>
-        <!--for desktop view-->
         <ul class="nav nav-tabs" style="padding-top:5%; width:100%;" *ngIf="!mode.tang">
           <li class="nav-item" *ngIf="str.currentUser.clear">
             <a class="nav-link" id="example6" routerLink="/Schedules" routerLinkActive="active">Schedules</a>
@@ -74,12 +64,15 @@
             <a class="nav-link" id="example11" routerLink="/Logs" routerLinkActive="active">Logs</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" id="example13" routerLink="/Dashboard" routerLinkActive="active">Dashboard</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="example12" routerLink="/Account" routerLinkActive="active">Account</a>
           </li>
         </ul>
-      </div>      
+      </div>
       <router-outlet></router-outlet>
-    </div>
+      </div>
   </div>
 </body>
 <footer class="text-center" hidden>

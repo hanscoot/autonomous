@@ -34,7 +34,8 @@
               {{i.name}}
             </th>
             <th scope="row">
-              <button class="btn btn-sm btn-outline-primary float-right" (click)="removal(i)">Remove Key</button>
+              <button *ngIf="!i.temp" class="btn btn-sm btn-outline-primary float-right" (click)="removal(i)">Remove Key</button>
+              <button *ngIf="i.temp" class="btn btn-sm btn-outline-primary float-right" disabled>Remove Key</button>
             </th>
           </tr>
           <tr *ngFor="let i of server">

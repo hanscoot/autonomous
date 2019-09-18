@@ -38,8 +38,8 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "INSERT INTO Log (LockName, Name, Time)"
-                                + " VALUES(@LockName, @Name, @Time)";
+                string sQuery = "INSERT INTO Log (LockName, Name, Time, Status)"
+                                + " VALUES(@LockName, @Name, @Time, @Status)";
                 conn.Open();
                 conn.Execute(sQuery, value);
             }

@@ -2,7 +2,7 @@
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <div id="v">
-    <h4 id="example2" class="text-muted">Account</h4><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="account()">Edit Account Details</button>
+    <h4 id="example2" class="text-muted">Account</h4><b class="text-warning" *ngIf="str.currentUser.temp">&nbsp;[Temp]</b><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="account()">Edit Account Details</button>
   </div>
   <div>&nbsp;</div>
   <div>&nbsp;</div>
@@ -31,7 +31,9 @@
         {{i.days}} {{i.times}} (Key ID {{i.keyID}})
       </li>
     </ul>
+    <div *ngIf="str.currentUser.temp">
+      {{tempuser.date}} @ {{tempuser.time}}
+    </div>
     <div>&nbsp;</div>
   </div>
 </body>
-

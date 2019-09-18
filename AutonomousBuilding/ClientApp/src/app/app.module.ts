@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { RouterModule, Routes } from '@angular/router';
+import { OneTimeComponent } from './Modals/one-time/one-time.component';
 import { EditPersonComponent } from './Modals/edit-person/edit-person.component';
 import { AddPersonComponent } from './Modals/add-person/add-person.component';
 import { AddKeyComponent } from './Modals/add-key/add-key.component';
@@ -42,8 +43,11 @@ import { AuthGuard } from './Guards/auth.guard';
 import { AccountGuard } from './Guards/account.guard';
 import { MobileService } from './Services/mobile.service';
 import { LandingComponent } from './landing/landing.component';
+import { DashboardComponent } from './Pages/dashboard/dashboard.component';
+import { QrcodeComponent } from './qrcode/qrcode.component';
 
 const routes: Routes = [
+  { path: 'Dashboard', component: DashboardComponent, canActivate: [AccountGuard] },
   { path: 'Account', component: AccountComponent, canActivate: [AccountGuard] },
   { path: 'Keys', component: KeysComponent, canActivate: [AuthGuard] },
   { path: 'Locks', component: LocksComponent, canActivate: [AuthGuard] },
@@ -67,6 +71,7 @@ const routes: Routes = [
     AddLockComponent,
     DetailsPeopleComponent,
     DetailsLocksComponent,
+    OneTimeComponent,
     AddKeyPersonComponent,
     AddKeyLockComponent,
     DetailsSchedulesComponent,
@@ -83,6 +88,8 @@ const routes: Routes = [
     AccountComponent,
     LoginComponent,
     LandingComponent,
+    DashboardComponent,
+    QrcodeComponent,
 
   ],
   imports: [
@@ -99,13 +106,13 @@ const routes: Routes = [
   ],
   providers: [NgbActiveModal, DetailsPeopleComponent, DetailsLocksComponent, DetailsSchedulesComponent,
     NavbarService, AuthenticationService, LogService, MobileService, AppComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
-    LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent, LandingComponent,
+    LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent, LandingComponent, DashboardComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   entryComponents: [EditPersonComponent, AddPersonComponent, TopNavComponent, AddKeyComponent, EditLockComponent,
-    AddLockComponent, AddKeyPersonComponent, AddKeyLockComponent, AddScheduleComponent,
-    AddKeyScheduleComponent, EditScheduleComponent, EditAccountComponent, LoginComponent]
+    AddLockComponent, AddKeyPersonComponent, AddKeyLockComponent, AddScheduleComponent, QrcodeComponent,
+    AddKeyScheduleComponent, EditScheduleComponent, EditAccountComponent, OneTimeComponent, LoginComponent]
 })
 export class AppModule { }

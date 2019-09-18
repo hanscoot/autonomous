@@ -58,6 +58,7 @@ export class KP {
 
 export class KPD {
   name: string;
+  temp: boolean;
   keyID: number;
   content: string;
 }
@@ -73,6 +74,7 @@ export class Log {
   lockName: string;
   name: string;
   time: string;
+  status: string;
 }
 
 export class TestData {
@@ -82,6 +84,7 @@ export class TestData {
   number: number;
   password: string;
   clear: boolean;
+  temp: boolean;
   token: string;
 }
 
@@ -94,6 +97,7 @@ export class ScheduleData {
 
 export class UserName {
   name: string;
+  temp: boolean;
   keyID: number;
 }
 
@@ -101,4 +105,36 @@ export class LockKeyName {
   lockKeyID: number;
   keyID: number;
   name: string;
+}
+
+export class QR {
+  personID: number;
+  keyID: number;
+  content: string;
+}
+
+export class Locks {
+  keyID: number;
+  name: string;
+  lockTypeID: number;
+  lockID: number;
+}
+
+export class Calss {
+  keyID: number;
+  name: string;
+  lockTypeID: number;
+  lockID: number;
+  scheduleID: number;
+  times: string;
+  days: string;
+}
+
+export class OneTime {
+  userID: number;
+  lockID: string;
+  time: string;
+  date: string;
+  personID: number;
+  keyID: number;
 }

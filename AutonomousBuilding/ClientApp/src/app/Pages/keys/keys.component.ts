@@ -13,9 +13,8 @@ import { KPD, KeyData } from '../../Models/Models';
   styleUrls: ['./keys.component.scss']
 })
 export class KeysComponent implements OnInit {
-  //QR CODE settings
+
   elementType: 'url' | 'canvas' | 'img' = 'url';
-  value: string = "Thing"
 
   constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService) { }
 

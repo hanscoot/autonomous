@@ -29,6 +29,7 @@ export class DetailsPeopleComponent implements OnInit {
   public serverData: PK[] = [];
   data: PK;
   public person: TestData[] = [];
+  public item: TestData
   private _api = '/api/pk';
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
@@ -38,7 +39,8 @@ export class DetailsPeopleComponent implements OnInit {
   ngOnInit() {
     this.nav.show();
     this.getperson();
-    this.getpeople();    
+    this.getpeople();
+    this.check();
   }
 
 
@@ -68,16 +70,21 @@ export class DetailsPeopleComponent implements OnInit {
       let url = `/api/pk/${item.personKeyID}`
       this.http.delete<PK[]>(url).subscribe();
       this.serverData = this.serverData.filter(k => k !== item)
+      var e = document.getElementById("demo")
+      e.removeAttribute('disabled');
     }
   }
   //opens modal to add key to specific person
   open() {
-    const modalRef = this.modalServices.open(AddKeyPersonComponent)
-    modalRef.componentInstance.items = this.id;
-    modalRef.result.then(() => {
-      this.getperson();
-      this.getpeople();
-    });
+    if (this.serverData.length === 0) {
+      const modalRef = this.modalServices.open(AddKeyPersonComponent)
+      modalRef.componentInstance.items = this.id;
+      modalRef.result.then(() => {
+        this.getperson();
+        this.getpeople();
+        this.check()
+      });
+    }
   }
   //toggles whether table is seen depending on person key data
   public show: boolean = true;
@@ -98,6 +105,22 @@ export class DetailsPeopleComponent implements OnInit {
       this.http.delete<TestData[]>(url).subscribe();
       this.router.navigateByUrl('/People');
     }
+  }
+
+  //keycheck
+  check() {
+    let url = `/api/values/${this.id}`
+    this.http.get<TestData>(url).subscribe(data => {
+      this.item = data
+      if (this.serverData.length === 0) {
+        var e = document.getElementById("demo")
+        e.removeAttribute('disabled');
+      }
+      else {
+        var e = document.getElementById("demo")
+        e.setAttribute('disabled', 'disabled');
+      }
+    })    
   }
   
 }

@@ -13,7 +13,7 @@
           <th scope="col">KeyID</th>
           <th scope="col" *ngIf="!mode.tang">Content</th>
           <th scope="col">User</th>
-          <th scope="col"></th>
+          <th scope="col" *ngIf="!mode.tang"></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -33,7 +33,8 @@
             </ngx-qrcode>
           </th>
           <th scope="row">
-            <button class="btn btn-sm btn-dark float-right" (click)="del(item)">Delete</button>
+            <button *ngIf="!item.temp" class="btn btn-sm btn-dark float-right" (click)="del(item)">Delete</button>
+            <button *ngIf="item.temp" class="btn btn-sm btn-dark float-right" disabled>Delete</button>
           </th>
         </tr>
         <tr *ngFor="let item of serverData">

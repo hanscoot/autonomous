@@ -2,7 +2,12 @@
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <div id="v">
-    <h4 class="text-muted">People</h4><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="open()">Add person</button>
+    <h4 class="text-muted">People</h4>
+    <div class="mr-2 float-right" style="display: block; margin: 0 auto;">
+      <button class="btn btn-primary btn-sm" (click)="user()">Add one-time user</button>
+      &nbsp;
+      <button class="btn btn-primary btn-sm" (click)="open()">Add person</button>
+    </div>
   </div>
   <div>&nbsp;</div>
   <div>&nbsp;</div>
@@ -12,6 +17,7 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col" *ngIf="!mode.tang">Email</th>
+          <th scope="col" *ngIf="!mode.tang">Type</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -22,6 +28,14 @@
           </th>
           <th scope="row" *ngIf="!mode.tang">
             {{item.email}}
+          </th>
+          <th scope="row" *ngIf="!mode.tang">
+            <div *ngIf="item.temp">
+              One-time Use
+            </div>
+            <div *ngIf="!item.temp">
+              User
+            </div>            
           </th>
           <th scope="row">
             <button class="btn btn-sm btn-light float-right" routerLink="/people/{{item.personId}}">Details</button>
