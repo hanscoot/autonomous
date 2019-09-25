@@ -5,9 +5,9 @@ import { TopNavComponent } from './top-nav/top-nav.component';
 import { MobileService } from './Services/mobile.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
-import { take, distinctUntilChanged } from 'rxjs/operators';
-import { TestData, Log } from './Models/Models';
+import { TestData, Log, OneTime, KeyData } from './Models/Models';
 import { LogService } from './Services/log.Service';
+import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +19,12 @@ export class AppComponent implements OnInit {
   currentUser: TestData
   navShown = true;
 
-  constructor(private http: HttpClient, private nav: NavbarService, private log: LogService,
-    public str: TopNavComponent, private mode: MobileService, private modalServices: NgbModal) {
+  constructor(private http: HttpClient, public nav: NavbarService, public log: LogService,
+    public str: TopNavComponent, public mode: MobileService, private modalServices: NgbModal) {
   }
 
   ngOnInit() {
     this.set()
-    this.gets()
-    this.getlog()
   }
 
   public shortlog: Log[] = [];
@@ -37,9 +35,59 @@ export class AppComponent implements OnInit {
       const modalRef = this.modalServices.open(LoginComponent, { backdrop: 'static', keyboard: false, backdropClass: 'bg-primary', centered: true });
       modalRef.result.then(() => {
         this.gets()
+        this.getlog()
+        this.check()
         this.set()
       })
     }
+    else {
+      this.gets()
+      this.getlog()
+      this.check()
+    }
+  }
+
+  test: OneTime[] = []
+  check() {
+    let currentDate = ((this.log.time()).split(" "))[0]
+    //iterate over temp users and remove those which time has expired
+    var q = []
+    var r = []
+    var time = this.log.time()
+    var k = (time.split(" "))[1]
+    this.http.get<OneTime[]>('/api/onetime/testdata').subscribe(data => {
+      this.test = data;
+      for (let c of this.test) {
+        var o = c.time.split("-")
+        for (let i of o) {
+          var p = i.split(":")
+          for (let i of p) {
+            var s = Number(i)
+            q.push(s)
+          }
+        }
+        var v = k.split(":")
+        for (let i of v) {
+          var t = Number(i)
+          r.push(t)
+        }
+        if ((c.date === currentDate) && ((q[2] < r[0]) || ((q[2] === r[0]) && (q[3] <= r[1])))) {//current date time is larger or equal to end date-time
+          var d = c.keyID
+          var b = c.personID
+          //delete person data
+          let p_url = `/api/values/${b}`
+          this.http.delete<TestData[]>(p_url).subscribe();
+          //delete onetime user data
+          let o_url = `/api/onetime/${b}`
+          this.http.delete<OneTime[]>(o_url).subscribe();
+          //delete key data
+          setTimeout(() => {
+            let k_url = `/api/keys/${d}`
+            this.http.delete<KeyData[]>(k_url).subscribe();
+          }, 100)
+        }
+      }
+    })
   }
 
   //gets non-authorised logdata

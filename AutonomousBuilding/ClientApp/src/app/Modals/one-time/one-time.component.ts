@@ -151,8 +151,32 @@ export class OneTimeComponent implements OnInit {
           onetimeuser.personID = this.userid.personId
           onetimeuser.keyID = this.keyid.keyID
           onetimeuser.lockID = this.lockids
-          onetimeuser.date = this.model.day + "/" + this.model.month + "/" + this.model.year //this.date
-          onetimeuser.time = this.stime.hour + ':' + this.stime.minute + "-" + this.etime.hour + ':' + this.etime.minute //this.time
+          var c = this.model.month.toString()
+          if (this.model.month < 10) {
+            c = "0" + c
+          }
+          var d = this.model.day.toString()
+          if (this.model.day < 10) {
+            d = "0" + d
+          }
+          var e = this.stime.hour.toString()
+          if (this.stime.hour < 10) {
+            e = "0" + e
+          }
+          var f = this.stime.minute.toString()
+          if (this.stime.minute < 10) {
+            f = "0" + f
+          }
+          var g = this.etime.hour.toString()
+          if (this.etime.hour < 10) {
+            g = "0" + g
+          }
+          var h = this.etime.minute.toString()
+          if (this.etime.minute < 10) {
+            h = "0" + h
+          }
+          onetimeuser.date = d + "/" + c + "/" + this.model.year //this.date
+          onetimeuser.time = e + ':' + f + "-" + g + ':' + h //this.time
           this.http.post<OneTime[]>('/api/onetime/test', onetimeuser, httpOptions).subscribe(() => this.activeModal.close())
         })
       })

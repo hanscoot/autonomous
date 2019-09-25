@@ -40,12 +40,12 @@ export class DetailsLocksComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
-    private datepipe: DatePipe, private log: AppComponent,
-    private nav: NavbarService, public str: TopNavComponent
+    private datepipe: DatePipe, public log: AppComponent,
+    public nav: NavbarService, public str: TopNavComponent
   ) { }
 
   ngOnInit() {
-    this.lockname()
+    this.lockname().subscribe(data => this.name = data)
     this.nav.show()
     this.getlock().subscribe(data => { this.lock = data })
     this.getlocks();
@@ -54,10 +54,10 @@ export class DetailsLocksComponent implements OnInit {
   }
 
   //getname
-  name: LockData[] = [];
-  lockname() {
+  name: LockData;
+  lockname(): Observable<LockData> {
     let url = `/api/locks/${this.id}`
-    this.http.get<LockData[]>(url).subscribe(data => this.name = data)
+    return this.http.get<LockData>(url)
   }
 
 
@@ -81,7 +81,7 @@ export class DetailsLocksComponent implements OnInit {
     this.getlock().subscribe(data => {
       this.lock = data;
       logs.lockName = this.lock.name
-      logs.status = "Success"
+      logs.status = "S"
       this.http.post<Log>('/api/log/test', logs, httpOptions).subscribe()
       this.LOG.unshift(logs)
       this.log.gets()

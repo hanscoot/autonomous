@@ -19,6 +19,10 @@ namespace AutonomousBuilding.Repositories
             {
                 return new Brainboxes.IO.ED008(connection);
             }
+            if (DeviceType == "ED-038")
+            {
+                return new Brainboxes.IO.ED038(connection);
+            }
             else
             {
                 throw new Exception("Unkown Device");
@@ -29,10 +33,10 @@ namespace AutonomousBuilding.Repositories
         {
             using (IConnection connection = new TCPConnection(value.IP))
             {
-                using (EDDevice ed = new ED008(connection))
+                using (EDDevice ed = GetDeviceType(value.Type, connection))
                 {
                     ed.Connect();
-                    ed.Outputs[value.OutputPort].Value = 0;
+                    ed.Outputs[value.OutputPort].Value = 1;
                 }
             }
         }
@@ -43,7 +47,7 @@ namespace AutonomousBuilding.Repositories
                 using (EDDevice ed = GetDeviceType(value.Type, connection))
                 {
                     ed.Connect();
-                    ed.Outputs[value.OutputPort].Value = 1;
+                    ed.Outputs[value.OutputPort].Value = 0;
                 }
             }
         }

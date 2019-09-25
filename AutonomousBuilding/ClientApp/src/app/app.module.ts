@@ -37,6 +37,7 @@ import { LoginComponent } from './login/login.component';
 import { NavbarService } from './Services/navbar.Service';
 import { AuthenticationService } from './Services/authentication.Service';
 import { LogService } from './Services/log.Service';
+import { TimingSerivce } from './Services/timing.service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AuthGuard } from './Guards/auth.guard';
@@ -105,7 +106,7 @@ const routes: Routes = [
     DeviceDetectorModule.forRoot(),
   ],
   providers: [NgbActiveModal, DetailsPeopleComponent, DetailsLocksComponent, DetailsSchedulesComponent,
-    NavbarService, AuthenticationService, LogService, MobileService, AppComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
+    NavbarService, AuthenticationService, LogService, TimingSerivce, MobileService, AppComponent, DatePipe, AccountComponent, KeysComponent, LocksComponent,
     LogsComponent, PeopleComponent, SchedulesComponent, TopNavComponent, LandingComponent, DashboardComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

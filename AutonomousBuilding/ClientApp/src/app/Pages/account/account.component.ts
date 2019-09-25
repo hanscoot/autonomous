@@ -16,34 +16,33 @@ import { AppComponent } from '../../app.component';
 export class AccountComponent {
 
   constructor(public nav: NavbarService, public str: TopNavComponent,
-    private http: HttpClient, private modalServices: NgbModal, private item: AppComponent)
+    private http: HttpClient, private modalServices: NgbModal, public item: AppComponent)
   {
     this.nav.show();
-    this.getuserinfo();
+    this.getuserinfo().subscribe(data => {this.users = data })
     this.get();
     this.getuser();
-    this.getone();
+    this.getone().subscribe(data => { this.tempuser = data })
   }
 
-  public users: UserInfo[] = [];
+  public users: UserInfo;
   public user: UserInfo;
-  public keys: UserKeys[] = [];
+  public keys: UserKeys
+  public key: UserKeys[] = [];
   public locks: UserLocks[] = [];
   public schedules: UserSchedules[] = [];
   public lock: UserLocks[] = [];
   public schedule: UserSchedules[] = [];
 
-  getuserinfo() {
+  getuserinfo(): Observable<UserInfo> {
     let id = this.str.currentUser.personId
     let url = `/api/account/user/${id}`
-    this.http.get<UserInfo[]>(url).subscribe(data => {
-      this.users = data;
-    })
+    return this.http.get<UserInfo>(url)
   }
   //get onetimeuser info
-  tempuser: OneTime[] =[]
-  getone() {
-    this.http.get<OneTime[]>(`/api/onetime/${this.str.currentUser.personId}`).subscribe(data => { this.tempuser = data })
+  tempuser: OneTime;
+  getone(): Observable<OneTime> {
+    return this.http.get<OneTime>(`/api/onetime/${this.str.currentUser.personId}`)
   }
   //open edit-account modal
   account() {
@@ -66,40 +65,39 @@ export class AccountComponent {
   get() {
     let id = this.str.currentUser.personId
     let key_url = `/api/account/key/${id}`
-    this.http.get<UserKeys[]>(key_url).subscribe(data => {//gets key data
+    this.http.get<UserKeys>(key_url).subscribe(data => {//gets key data
       this.keys = data;
-      for (let i of this.keys) {
-        let lock_url = `/api/account/lock/${i.keyID}`
-        this.http.get<UserLocks[]>(lock_url).subscribe(data => {//gets lock data
-          this.lock = data;
-          for (let j of this.lock) {
-            var count = 0
-            for (let k of this.locks) {
-              if (j.name === k.name) {
-                count += 1
-              }
-            }
-            if (count === 0) {
-              this.locks.push(j)
+      let lock_url = `/api/account/lock/${this.keys.keyID}`
+      this.http.get<UserLocks[]>(lock_url).subscribe(data => {//gets lock data
+        this.lock = data;
+        for (let j of this.lock) {
+          var count = 0
+          for (let k of this.locks) {
+            if (j.name === k.name) {
+              count += 1
             }
           }
-        })
-        let schedule_url = `/api/account/schedules/${i.keyID}`
-        this.http.get<UserSchedules[]>(schedule_url).subscribe(data => {//gets schedule data
-          this.schedule = data;
-          for (let j of this.schedule) {
-            var count = 0
-            for (let k of this.schedules) {
-              if (j.scheduleID === k.scheduleID) {
-                count += 1
-              }
-            }
-            if (count === 0) {
-              this.schedules.push(j)
+          if (count === 0) {
+            this.locks.push(j)
+          }
+        }
+      })
+      let schedule_url = `/api/account/schedules/${this.keys.keyID}`
+      this.http.get<UserSchedules[]>(schedule_url).subscribe(data => {//gets schedule data
+        this.schedule = data;
+        for (let j of this.schedule) {
+          var count = 0
+          for (let k of this.schedules) {
+            if (j.scheduleID === k.scheduleID) {
+              count += 1
             }
           }
-        })
-      }
+          if (count === 0) {
+            this.schedules.push(j)
+          }
+        }
+      })
+      this.key.push(this.keys)
     })
   }
   /*

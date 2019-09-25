@@ -30,6 +30,12 @@ namespace AutonomousBuilding.Controllers
             return oneTimeRepository.Find(id);
         }
 
+        [HttpGet("ct/{id}")]
+        public OneTime Getuser(int id)
+        {
+            return oneTimeRepository.GetUser(id);
+        }
+
         [HttpPost("test")]
         public void Post([FromBody] OneTime value)
         {

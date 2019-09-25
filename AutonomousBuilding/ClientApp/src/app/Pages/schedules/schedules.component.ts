@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarService } from '../../Services/navbar.Service';
 import { ScheduleData } from '../../Models/Models';
 
+
 @Component({
   selector: 'app-schedules',
   templateUrl: './schedules.component.html',
@@ -12,7 +13,7 @@ import { ScheduleData } from '../../Models/Models';
 })
 export class SchedulesComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, public nav: NavbarService) { }
 
   ngOnInit() {
     this.get()

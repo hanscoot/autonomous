@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LockData, LockType } from '../../Models/Models';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,7 +21,7 @@ export class EditLockComponent implements OnInit {
 
   @Input() public items;
 
-  public serverData: LockData[] = [] ;
+  public serverData: LockData;
   public data: LockData[] = [];
   public lock: LockType;
   public thing: LockData;
@@ -31,13 +32,13 @@ export class EditLockComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.get()
+    this.get().subscribe(data => this.serverData = data)
     this.gettype()
   }
   //Get lock information from database
-  get() {
+  get(): Observable<LockData> {
     let url = `/api/locks/${this.items}`
-    this.http.get<LockData[]>(url).subscribe(data => this.serverData = data)
+    return this.http.get<LockData>(url)
   }
   gettype() {
     let url = `/api/locks/${this.items}`

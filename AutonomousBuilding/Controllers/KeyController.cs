@@ -54,5 +54,12 @@ namespace AutonomousBuilding.Controllers
     {
             keyDataRepository.Del(id);
     }
+
+    //GET api/keys/ct/{id}
+    [HttpGet("ct/{content}")]
+    public KeyData GetKey(string content)
+    {
+        return keyDataRepository.Check(content);
+    }
   }
 }

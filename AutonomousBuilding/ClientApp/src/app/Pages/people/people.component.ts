@@ -15,7 +15,7 @@ import { TopNavComponent } from '../../top-nav/top-nav.component';
 })
 export class PeopleComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService, private str: TopNavComponent) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, public nav: NavbarService, public mode: MobileService, public str: TopNavComponent) { }
 
   ngOnInit() {
     this.nav.show()

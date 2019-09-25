@@ -17,7 +17,7 @@ export class TopNavComponent {
   currentUser: TestData;
 
   constructor(
-    private router: Router, private mode: MobileService, private modalServices: NgbModal,
+    private router: Router, public mode: MobileService, private modalServices: NgbModal,
     private authenticationService: AuthenticationService,
     public nav: NavbarService, private route: ActivatedRoute)
   {

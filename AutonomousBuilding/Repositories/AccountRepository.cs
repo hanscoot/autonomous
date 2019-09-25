@@ -12,7 +12,8 @@ namespace AutonomousBuilding.Repositories
     {
         UserSchedules Get(int id);
         UserSchedules[] Getsch(int id);
-        UserKeys[] GetKey(int id);
+        UserKeys GetKey(int id);
+        UserKeys[] GetKeys(int id);
         UserLocks[] GetLock(int id);
         UserInfo GetUser(int id);
         UserName GetUsername(int id);
@@ -56,11 +57,23 @@ namespace AutonomousBuilding.Repositories
             }
         }
 
-        public UserKeys[] GetKey(int id)
+        public UserKeys GetKey(int id)
         {
             using (var conn = new SqlConnection(this.connString))
             {
                 string sQuery = "SELECT People.PersonId, Keys.KeyID FROM PersonKeys" + 
+                                " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +
+                                " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
+                                " WHERE PersonKeys.PersonID = @PersonID";
+                conn.Open();
+                return conn.Query<UserKeys>(sQuery, new { PersonID = id }).FirstOrDefault();
+            }
+        }
+        public UserKeys[] GetKeys(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT People.PersonId, Keys.KeyID FROM PersonKeys" +
                                 " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +
                                 " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
                                 " WHERE PersonKeys.PersonID = @PersonID";

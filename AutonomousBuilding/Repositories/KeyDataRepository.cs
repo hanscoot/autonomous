@@ -16,6 +16,7 @@ namespace AutonomousBuilding.Repositories
         void Del(int id);
         void Edit(KeyData value);
         KeyData Find(int id);
+        KeyData Check(string content);
     }
 
     public class KeyDataRepository : IKeyDataRepository
@@ -77,6 +78,18 @@ namespace AutonomousBuilding.Repositories
                                 " WHERE TypeID = @TypeID";
                 conn.Open();
                 return conn.Query<KeyData>(sQuery, new { TypeID = id }).FirstOrDefault();
+            }
+        }
+
+        //gets key for content
+        public KeyData Check(string content)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT * FROM Keys" +
+                                " WHERE Content = @Content";
+                conn.Open();
+                return conn.Query<KeyData>(sQuery, new { Content = content }).FirstOrDefault();
             }
         }
     }

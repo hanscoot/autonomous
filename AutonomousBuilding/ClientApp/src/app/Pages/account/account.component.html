@@ -14,7 +14,7 @@
     <h6>Contact Number:</h6> {{users.number}}
     <div>&nbsp;</div>
     <h6>Key assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of keys">
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of key">
       <li>
         {{i.keyID}}
       </li>
@@ -32,7 +32,7 @@
       </li>
     </ul>
     <div *ngIf="str.currentUser.temp">
-      {{tempuser.date}} @ {{tempuser.time}}
+      <div>{{tempuser.date}} @ {{tempuser.time}}</div>
     </div>
     <div>&nbsp;</div>
   </div>

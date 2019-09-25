@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserLocks, QR } from '../Models/Models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TopNavComponent } from '../top-nav/top-nav.component';
+import { TimingSerivce } from '../Services/timing.service';
 
 @Component({
   selector: 'app-qrcode',
@@ -22,6 +23,7 @@ export class QrcodeComponent implements OnInit {
     this.getlocks()
   }
 
+  
   //get all keys for that lock
   //get all keys for that user from those keys
   //gets lock key data correspoonding to the lock clicked
@@ -30,18 +32,31 @@ export class QrcodeComponent implements OnInit {
   item: QR
   count = 0
   getlocks() {
-    this.http.get<UserLocks[]>(`/api/account/locks/${this.items.lockID}`).subscribe(data => {//gets key data
-      this.server = data;
-      for (let i of this.server) {
-        let url = `/api/account/keys/${i.keyID}`
-        this.http.get<QR>(url).subscribe(data => {
-          this.item = data;
-          if (this.item.personID === this.str.currentUser.personId) {
-            this.list.push(this.item)
-            this.value = this.item.content;
-          }
-        })
-      }
-    })
+    if (this.str.currentUser.temp === false) {
+      this.http.get<UserLocks[]>(`/api/account/locks/${this.items.lockID}`).subscribe(data => {//gets key data
+        this.server = data;
+        for (let i of this.server) {
+          let url = `/api/account/keys/${i.keyID}`
+          this.http.get<QR>(url).subscribe(data => {
+            this.item = data;
+            if (this.item.personID === this.str.currentUser.personId) {
+              this.list.push(this.item)
+              this.value = this.item.content;
+            }
+          })
+        }
+      })
+    }
+    else {
+      let url = `/api/account/keys/${this.items.keyID}`
+      this.http.get<QR>(url).subscribe(data => {
+        this.item = data;
+        if (this.item.personID === this.str.currentUser.personId) {
+          this.list.push(this.item)
+          this.value = this.item.content;
+        }
+      })
+    }
+    
   } 
 }

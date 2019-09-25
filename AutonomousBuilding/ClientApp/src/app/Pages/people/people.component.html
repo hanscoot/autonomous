@@ -4,7 +4,7 @@
   <div id="v">
     <h4 class="text-muted">People</h4>
     <div class="mr-2 float-right" style="display: block; margin: 0 auto;">
-      <button class="btn btn-primary btn-sm" (click)="user()">Add one-time user</button>
+      <button class="btn btn-primary btn-sm" (click)="user()" *ngIf="!mode.tang">Add one-time user</button>
       &nbsp;
       <button class="btn btn-primary btn-sm" (click)="open()">Add person</button>
     </div>
@@ -34,7 +34,7 @@
               One-time Use
             </div>
             <div *ngIf="!item.temp">
-              User
+              Schedule Based
             </div>            
           </th>
           <th scope="row">

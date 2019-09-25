@@ -25,25 +25,25 @@ const httpOptions = {
 export class DetailsSchedulesComponent implements OnInit {
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
-    private route: ActivatedRoute, private router: Router, private nav: NavbarService) { }
+    private route: ActivatedRoute, private router: Router, public nav: NavbarService) { }
 
-  public schedule: ScheduleData[] = [];
+  public schedule: ScheduleData
   public not: ScheduleData;
   public serverData: SK[] = [];
   public list: UserName;
   public username: UserName[] = [];
 
   ngOnInit() {
-    this.getschedule()
+    this.getschedule().subscribe(data => { this.schedule = data })
     this.getschedules()
     this.nav.show()
   }
   
   id = this.route.snapshot.paramMap.get('id')
   //gets schedule's data corresponding to the schedule clicked
-  getschedule() {
+  getschedule(): Observable<ScheduleData> {
     let url = `/api/schedule/${this.id}`
-    this.http.get<ScheduleData[]>(url).subscribe(data => { this.schedule = data })
+    return this.http.get<ScheduleData>(url)
   }
   //gets schedule key data correspoonding to the schedule clicked
   count = 0

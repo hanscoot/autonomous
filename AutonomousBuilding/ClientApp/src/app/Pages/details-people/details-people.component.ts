@@ -28,17 +28,17 @@ export class DetailsPeopleComponent implements OnInit {
 
   public serverData: PK[] = [];
   data: PK;
-  public person: TestData[] = [];
+  public person: TestData;
   public item: TestData
   private _api = '/api/pk';
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
-    private location: Location, private nav: NavbarService) { }
+    private location: Location, public nav: NavbarService) { }
 
   ngOnInit() {
     this.nav.show();
-    this.getperson();
+    this.getperson().subscribe(data => { this.person = data; console.log(this.person)});
     this.getpeople();
     this.check();
   }
@@ -46,9 +46,9 @@ export class DetailsPeopleComponent implements OnInit {
 
   //PERSON ************************************************
   //gets person data corresponding to the person clicked
-  getperson() {
+  getperson(): Observable<TestData> {
     let url = `/api/values/${this.id}`
-    this.http.get<TestData[]>(url).subscribe(data => { this.person = data })
+    return this.http.get<TestData>(url)
   }
   //gets person key data correspoonding to the person clicked
   id = this.route.snapshot.paramMap.get('id')

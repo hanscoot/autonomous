@@ -35,6 +35,58 @@
     <None Remove="ClientApp\src\app\Interceptors\jwt.interceptor.ts" />
     <None Remove="ClientApp\src\app\Models\Models.ts" />
     <None Remove="ClientApp\src\app\Services\authentication.Services.ts" />
+    <None Remove="ClientApp\src\app\Services\timing.service.ts" />
+    <None Remove="SQL\Once_00001.sql" />
+    <None Remove="SQL\Once_00002.sql" />
+    <None Remove="SQL\Once_00003.sql" />
+    <None Remove="SQL\Once_00004.sql" />
+    <None Remove="SQL\Once_00005.sql" />
+    <None Remove="SQL\Once_00006.sql" />
+    <None Remove="SQL\Once_00007.sql" />
+    <None Remove="SQL\Once_00008.sql" />
+    <None Remove="SQL\Once_00009.sql" />
+    <None Remove="SQL\Once_00010.sql" />
+    <None Remove="SQL\Once_00011.sql" />
+    <None Remove="SQL\Once_00012.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="SQL\Once_00001.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00002.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00003.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00004.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00005.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00006.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00007.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00008.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00009.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00010.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00011.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQL\Once_00012.sql">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +106,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\Models\Models.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\Services\timing.service.ts" />
   </ItemGroup>
 
 </Project>

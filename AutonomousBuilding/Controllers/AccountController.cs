@@ -19,9 +19,15 @@ namespace AutonomousBuilding.Controllers
         }
         //Gets all key id's for that user id
         [HttpGet("key/{id}")]
-        public UserKeys[] GetKey(int id)
+        public UserKeys GetKey(int id)
         {
             return accountRepository.GetKey(id);
+        }
+        //Gets all key id's for that user id
+        [HttpGet("keyed/{id}")]
+        public UserKeys[] GetKeys(int id)
+        {
+            return accountRepository.GetKeys(id);
         }
         //Gets all lock name's for that key id
         [HttpGet("lock/{id}")]

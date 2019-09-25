@@ -58,4 +58,13 @@
       </tbody>
     </table>
   </div>
+  <div class="card border-warning">
+    <div class="card-header card-title text-warning">Testing</div>
+    <div class="card-body scroll ">
+      <label for="content">Check Content</label>
+      <input #content class="form-control form-control-sm shadow-none" id="content">
+      <p id="test"></p>
+      <button class="btn btn-sm btn-primary" (click)="check(content.value)">Check?</button>
+    </div>
+  </div>
 </body>

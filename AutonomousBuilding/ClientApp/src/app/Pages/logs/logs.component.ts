@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { NavbarService } from '../../Services/navbar.Service';
 import { AppComponent } from '../../app.component';
 import { Log } from '../../Models/Models';
+import { MobileService } from '../../Services/mobile.service';
 
 @Component({
   selector: 'app-logs',
@@ -12,7 +13,7 @@ import { Log } from '../../Models/Models';
 })
 export class LogsComponent implements OnInit {
 
-  constructor(private http: HttpClient, private nav: NavbarService, private log: AppComponent) { }
+  constructor(private http: HttpClient, public nav: NavbarService, public log: AppComponent, public mode: MobileService) { }
 
   ngOnInit() {
     this.getlog().subscribe(data => {

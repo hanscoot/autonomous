@@ -2,18 +2,6 @@
 <body class="" id="example1" style="padding-top: 5%; padding-left: 5%; padding-right: 5%; padding-bottom:5%">
   <h5 class="display-4" id="example2" *ngIf="nav.visible">
     Autonomous Building
-    <div ngbDropdown class="d-inline-block float-right" placement="left" *ngIf="mode.tang">
-      <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle></button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <a ngbDropdownItem routerLink="/Dashboard" routerLinkActive="active">Dashboard</a>
-        <a ngbDropdownItem routerLink="/Schedules" routerLinkActive="active" *ngIf="str.currentUser.clear">Schedules</a>
-        <a ngbDropdownItem routerLink="/Locks" routerLinkActive="active" *ngIf="str.currentUser.clear">Locks</a>
-        <a ngbDropdownItem routerLink="/Keys" routerLinkActive="active" *ngIf="str.currentUser.clear">Keys</a>
-        <a ngbDropdownItem routerLink="/People" routerLinkActive="active" *ngIf="str.currentUser.clear">People</a>
-        <a ngbDropdownItem routerLink="/Logs" routerLinkActive="active" *ngIf="str.currentUser.clear">Logs</a>
-        <a ngbDropdownItem routerLink="/Account" routerLinkActive="active">Account</a>
-      </div>
-    </div>
   </h5>
   <div>
     &nbsp;

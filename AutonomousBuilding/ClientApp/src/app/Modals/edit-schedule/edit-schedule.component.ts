@@ -22,7 +22,7 @@ export class EditScheduleComponent implements OnInit {
 
   @Input() public items;
 
-  public schedule: ScheduleData[] = [];
+  public schedule: ScheduleData
   public serverData: ScheduleData[] = [];
 
 
@@ -32,16 +32,16 @@ export class EditScheduleComponent implements OnInit {
 
   ngOnInit() {
     this.getall().subscribe(item => { this.serverData = item })
-    this.get()
+    this.get().subscribe(data => { this.schedule = data })
   }
   //gets data
   getall(): Observable<ScheduleData[]> {
     return this.http.get<ScheduleData[]>('/api/schedule/testdata')
   }
   //Gets data for specific schedule
-  get() {
+  get(): Observable<ScheduleData> {
     let url = `/api/schedule/${this.items}`
-    this.http.get<ScheduleData[]>(url).subscribe(data => { this.schedule = data })
+    return this.http.get<ScheduleData>(url)
   }
   //Switches between standard and custom times/days
   buttonName = "Custom Times/Days"

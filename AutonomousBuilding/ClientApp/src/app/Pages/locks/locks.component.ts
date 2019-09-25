@@ -13,7 +13,7 @@ import { LockData } from '../../Models/Models';
 })
 export class LocksComponent implements OnInit {
 
-  constructor(private http: HttpClient, private modalServices: NgbModal, private nav: NavbarService, private mode: MobileService) { }
+  constructor(private http: HttpClient, private modalServices: NgbModal, public nav: NavbarService, public mode: MobileService) { }
 
   ngOnInit() {
     this.nav.show()

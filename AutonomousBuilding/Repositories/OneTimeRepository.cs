@@ -14,6 +14,7 @@ namespace AutonomousBuilding.Repositories
         OneTime Find(int id);
         void Post(OneTime value);
         void Delete(int id);
+        OneTime GetUser(int id);
     }
 
     public class OneTimeRepository : IOneTimeRepository
@@ -31,6 +32,15 @@ namespace AutonomousBuilding.Repositories
                 string sQuery = "SELECT * FROM OneTime" + " WHERE PersonID = @PersonID";
                 conn.Open();
                 return conn.Query<OneTime>(sQuery, new { PersonID = id }).FirstOrDefault();
+            }
+        }
+        public OneTime GetUser(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT * FROM OneTime" + " WHERE KeyID = @KeyID";
+                conn.Open();
+                return conn.Query<OneTime>(sQuery, new { KeyID = id }).FirstOrDefault();
             }
         }
 
@@ -59,9 +69,9 @@ namespace AutonomousBuilding.Repositories
             using (var conn = new SqlConnection(this.connString))
             {
                 string sQuery = "DELETE FROM OneTime"
-                            + " WHERE UserID = @UserID";
+                            + " WHERE PersonID = @PersonID";
                 conn.Open();
-                conn.Execute(sQuery, new { UserID = id });
+                conn.Execute(sQuery, new { PersonID = id });
             }
         }
     }
