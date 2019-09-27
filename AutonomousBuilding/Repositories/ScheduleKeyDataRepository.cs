@@ -14,7 +14,8 @@ namespace AutonomousBuilding.Repositories
         Task<IEnumerable<ScheduleKey>> GetAllAsync();
         void Test(ScheduleKey value);
         void Del(int id);
-        ScheduleKey Find(int id);
+        ScheduleKey[] Tests();
+        ScheduleKey[] Find(int id);
         ScheduleKey FindID(int id);
         ScheduleKeyData FindKey(int id);
         ScheduleKey FindSchKey(int id);
@@ -26,6 +27,16 @@ namespace AutonomousBuilding.Repositories
         public ScheduleKeyDataRepository(IConfiguration config)
         {
             this.connString = config.GetConnectionString("default");
+        }
+        //gets all
+        public ScheduleKey[] Tests()
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT ScheduleKeys.KeyID FROM ScheduleKeys";
+                conn.Open();
+                return conn.Query<ScheduleKey>(sQuery).Cast<ScheduleKey>().ToArray();
+            }
         }
 
         //get from keys
@@ -63,17 +74,17 @@ namespace AutonomousBuilding.Repositories
             }
         }
         //gets specific id
-        public ScheduleKey Find(int id)
+        public ScheduleKey[] Find(int id)
         {
             using (var conn = new SqlConnection(this.connString))
             {
                 string sQuery = "SELECT ScheduleKeys.ScheduleKeyID, ScheduleKeys.KeyID" +
                                                     " FROM ScheduleKeys" +
-                                                    " INNER JOIN People ON Schedule.ScheduleID = ScheduleKeys.ScheduleID" +
+                                                    " INNER JOIN Schedule ON Schedule.ScheduleID = ScheduleKeys.ScheduleID" +
                                                     " INNER JOIN Keys ON Keys.KeyID = ScheduleKeys.KeyID" +
                                                     " WHERE ScheduleKeys.ScheduleID = @ScheduleID";
                 conn.Open();
-                return conn.Query<ScheduleKey>(sQuery, new { ScheduleKeyID = id }).FirstOrDefault();
+                return conn.Query<ScheduleKey>(sQuery, new { ScheduleID = id }).Cast<ScheduleKey>().ToArray(); ;
             }
         }
 

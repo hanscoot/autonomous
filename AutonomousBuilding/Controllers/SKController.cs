@@ -28,7 +28,7 @@ namespace AutonomousBuilding.Controllers
 
     // GET api/pk/5
     [HttpGet("{id}")]
-    public ScheduleKey Get(int id)
+    public ScheduleKey[] Get(int id)
     {
             return scheduleKeyDataRepository.Find(id);
     }

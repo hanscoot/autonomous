@@ -36,7 +36,7 @@ export class DetailsLocksComponent implements OnInit {
   public one: boolean = false;
   public tex: string = "Locked";
   public list: UserName;
-  public username: UserName[] = [];
+  public username: Object;
 
   constructor(private http: HttpClient, private modalServices: NgbModal,
     private route: ActivatedRoute, private router: Router,
@@ -45,7 +45,7 @@ export class DetailsLocksComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.lockname().subscribe(data => this.name = data)
+    this.lockname().subscribe(data => { this.item = data})
     this.nav.show()
     this.getlock().subscribe(data => { this.lock = data })
     this.getlocks();
@@ -54,7 +54,7 @@ export class DetailsLocksComponent implements OnInit {
   }
 
   //getname
-  name: LockData;
+  item: LockData;
   lockname(): Observable<LockData> {
     let url = `/api/locks/${this.id}`
     return this.http.get<LockData>(url)
@@ -103,26 +103,8 @@ export class DetailsLocksComponent implements OnInit {
   Data: LockType[] = []
   //turn on light
   on() {
-    this.getall().subscribe(item => {
-      this.serverData = item
-      for (let i of this.serverData) {
-        if (i.lockTypeID !== this.lock.lockTypeID) {
-          this.serverData = this.serverData.filter(k => k !== i)
-        }
-      }
-      this.http.post('/api/test/0', this.serverData[0], httpOptions).subscribe()
-      this.one = true
-      var text = document.getElementById("status");
-      text.innerHTML = "Unlocked"
-      setTimeout(() => {
-        this.one = false;
-        document.getElementById("status").innerHTML = this.tex;
-      }, (this.serverData[0].delay + 1000))
-      setTimeout(() => {
-        this.http.post('/api/test/1', this.serverData[0], httpOptions).subscribe()
-      }, this.serverData[0].delay)
-      this.lg()
-    })
+    this.http.post('/api/file/light/1', httpOptions).subscribe()
+    this.lg()
   }
 
   id = this.route.snapshot.paramMap.get('id')
@@ -131,38 +113,12 @@ export class DetailsLocksComponent implements OnInit {
     let url = `/api/locks/${this.id}`
     return this.http.get<LockData>(url)
   }
-  //gets lock key data correspoonding to the lock clicked
-  count = 0
+  //gets lock key data corresponding to the lock clicked
   getlocks() {
-    let url = `/api/lk/testdata`
-    this.http.get<LK[]>(url).subscribe(data => {
-    this.server = data;
-      for (let i of this.server) {
-        if (i.lockID.toString() !== this.id) {
-          this.server = this.server.filter(k => k !== i)
-        }
-      }
-      for (let l of this.server) {//gets user information for the key
-        let urlkey = `/api/account/name/${l.keyID}`
-        this.http.get<UserName>(urlkey).subscribe(data => {
-          this.list = data;
-          if (this.list !== null) {
-            this.username.push(this.list)//remove key from other list if key is assigned to a user
-            this.server = this.server.filter(k => k.keyID !== l.keyID)
-          }
-        })
-      }
-    });
-  } 
-  //deletes lock's key from lock key data
-  remove(item: LK) {
-    var m = confirm("Are you sure you want to delete this?")
-    if (m === true) {
-      let url = `/api/lk/${item.lockKeyID}`
-      this.http.delete<LK[]>(url).subscribe();
-      this.server = this.server.filter(k => k !== item)
-    }
+    let url = `/api/file/lockkey/${this.id}`
+    this.http.post(url, httpOptions).subscribe(data => { this.username = data })
   }
+
   //deletes lock's key from lock key data
   ids: LockKeyName;
   removal(item: UserName) {
@@ -173,7 +129,7 @@ export class DetailsLocksComponent implements OnInit {
         this.ids = data;
         let url = `/api/lk/${this.ids.lockKeyID}`
         this.http.delete<LK[]>(url).subscribe();
-        this.username = this.username.filter(k => k.keyID !== item.keyID)
+        setTimeout(() => { this.getlocks()}, 100)
       })
     }
   }
@@ -204,15 +160,15 @@ export class DetailsLocksComponent implements OnInit {
   toggle() {
     this.show = !this.show
   }
-  item: LockData
+  th: LockData
   //deletes lock
   delete() {
     var m = confirm("Are you sure you want to delete this?")
     if (m === true) {
       let url = `/api/locks/${this.id}`
       this.http.get<LockData>(url).subscribe(data => {
-        this.item = data
-        let p = this.item.lockTypeID
+        this.th = data
+        let p = this.th.lockTypeID
         let urrl = `/api/locktype/${p}`
         this.http.delete<LockType>(urrl).subscribe()
       })

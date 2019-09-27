@@ -12,6 +12,7 @@ namespace AutonomousBuilding.Repositories
     public interface IKeyDataRepository
     {
         Task<IEnumerable<KeyData>> GetAllAsync();
+        KeyData[] Tests();
         void Test(KeyData value);
         void Del(int id);
         void Edit(KeyData value);
@@ -45,6 +46,15 @@ namespace AutonomousBuilding.Repositories
                                 + " VALUES(@TypeID, @Content)";
                 conn.Open();
                 conn.Execute(sQuery, value);
+            }
+        }
+        public KeyData[] Tests()
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT * FROM Keys";
+                conn.Open();
+                return conn.Query<KeyData>(sQuery).Cast<KeyData>().ToArray();
             }
         }
         //delete from keys

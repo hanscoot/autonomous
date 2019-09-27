@@ -26,7 +26,7 @@ const httpOptions = {
 })
 export class DetailsPeopleComponent implements OnInit {
 
-  public serverData: PK[] = [];
+  public serverData: PK;
   data: PK;
   public person: TestData;
   public item: TestData
@@ -38,7 +38,7 @@ export class DetailsPeopleComponent implements OnInit {
 
   ngOnInit() {
     this.nav.show();
-    this.getperson().subscribe(data => { this.person = data; console.log(this.person)});
+    this.getperson().subscribe(data => { this.person = data });
     this.getpeople();
     this.check();
   }
@@ -51,32 +51,34 @@ export class DetailsPeopleComponent implements OnInit {
     return this.http.get<TestData>(url)
   }
   //gets person key data correspoonding to the person clicked
+  show: boolean;
   id = this.route.snapshot.paramMap.get('id')
-  count =0
   getpeople() {
-    let url = `/api/pk/testdata`
-    this.http.get<PK[]>(url).subscribe(data => { this.serverData = data;
-      for (let i of this.serverData) {
-        if (i.personID.toString() !== this.id) {
-          this.serverData = this.serverData.filter(k => k !== i)
-        }
+    let url = `/api/pk/${this.id}`
+    this.http.get<PK>(url).subscribe(data => {
+      this.serverData = data;
+      if (this.serverData === null) {
+        this.show = false;
+      }
+      else {
+        this.show = true;
       }
     });
   } 
   //deletes person's key from person key data
-  remove(item: PK) {
+  remove(id) {
     var m = confirm("Are you sure you want to delete this?")
     if (m === true) {
-      let url = `/api/pk/${item.personKeyID}`
+      let url = `/api/pk/${id}`
       this.http.delete<PK[]>(url).subscribe();
-      this.serverData = this.serverData.filter(k => k !== item)
+      setTimeout(() => { this.getpeople() }, 100)
       var e = document.getElementById("demo")
       e.removeAttribute('disabled');
     }
   }
   //opens modal to add key to specific person
   open() {
-    if (this.serverData.length === 0) {
+    if (this.serverData === null) {
       const modalRef = this.modalServices.open(AddKeyPersonComponent)
       modalRef.componentInstance.items = this.id;
       modalRef.result.then(() => {
@@ -86,8 +88,7 @@ export class DetailsPeopleComponent implements OnInit {
       });
     }
   }
-  //toggles whether table is seen depending on person key data
-  public show: boolean = true;
+
   //opens edit window
   openEdit() {
     const modalRef = this.modalServices.open(EditPersonComponent);
@@ -112,7 +113,7 @@ export class DetailsPeopleComponent implements OnInit {
     let url = `/api/values/${this.id}`
     this.http.get<TestData>(url).subscribe(data => {
       this.item = data
-      if (this.serverData.length === 0) {
+      if (this.serverData === null) {
         var e = document.getElementById("demo")
         e.removeAttribute('disabled');
       }

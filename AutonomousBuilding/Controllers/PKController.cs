@@ -35,7 +35,7 @@ namespace AutonomousBuilding.Controllers
 
     // GET api/pk/5
     [HttpGet("{id}")]
-    public PersonKey Get(int id)
+    public KeyPerson Get(int id)
     {
             return personKeyDataRepository.Find(id);
     }

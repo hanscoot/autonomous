@@ -1,0 +1,20 @@
+IF OBJECT_ID(N'dbo.PersonKeys', N'U') IS NULL 
+begin
+	CREATE TABLE [dbo].[PersonKeys](
+	[PersonKeyID] [int] IDENTITY(1,1) NOT NULL,
+	[PersonID] [int] NULL,
+	[KeyID] [int] NULL,
+	 CONSTRAINT [PK_PersonKeys] PRIMARY KEY CLUSTERED 
+	(
+		[PersonKeyID] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[PersonKeys]  WITH CHECK ADD FOREIGN KEY([KeyID])
+	REFERENCES [dbo].[Keys] ([KeyID])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[PersonKeys]  WITH CHECK ADD FOREIGN KEY([PersonID])
+	REFERENCES [dbo].[People] ([PersonId])
+	ON DELETE CASCADE
+end

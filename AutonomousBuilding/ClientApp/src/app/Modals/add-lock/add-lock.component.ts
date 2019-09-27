@@ -54,7 +54,7 @@ export class AddLockComponent implements OnInit {
     })
   }
   //CUSTOM LOCKTYPE SELECTOR
-  add(item: string, one: string, two: string, three: string, four: string) {
+  add(item: string, one: string, two: string, three: string,f:string, ff:string, fff:string, four: string) {
     let One = this.name(item)
     let Two = this.type(one)
     let Three = this.ip(two)
@@ -62,9 +62,12 @@ export class AddLockComponent implements OnInit {
     let Five = this.delay(four)
     if ((One === true) && (Two === true) && (Three === true) && (Four === true) && (Five === true)) {
       let le: LockType = new LockType();
-      le.type = one.trim()
-      le.iP = two.trim()
+      le.outputType = one.trim()
+      le.outputIP = two.trim()
       le.outputPort = Number(three.trim())
+      le.inputType = f.trim()
+      le.inputIP = ff.trim()
+      le.inputPort = Number(fff.trim())
       le.delay = Number(four.trim()) * 1000
       this.http.post('/api/locktype/test', le, httpOptions).subscribe()
       setTimeout(() => {

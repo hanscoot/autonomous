@@ -31,9 +31,9 @@ namespace AutonomousBuilding.Repositories
 
         public void put(LockType value)
         {
-            using (IConnection connection = new TCPConnection(value.IP))
+            using (IConnection connection = new TCPConnection(value.OutputIP))
             {
-                using (EDDevice ed = GetDeviceType(value.Type, connection))
+                using (EDDevice ed = GetDeviceType(value.OutputType, connection))
                 {
                     ed.Connect();
                     ed.Outputs[value.OutputPort].Value = 1;
@@ -42,9 +42,9 @@ namespace AutonomousBuilding.Repositories
         }
         public void set(LockType value)
         {
-            using (IConnection connection = new TCPConnection(value.IP))
+            using (IConnection connection = new TCPConnection(value.OutputIP))
             {
-                using (EDDevice ed = GetDeviceType(value.Type, connection))
+                using (EDDevice ed = GetDeviceType(value.OutputType, connection))
                 {
                     ed.Connect();
                     ed.Outputs[value.OutputPort].Value = 0;

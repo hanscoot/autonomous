@@ -1,0 +1,33 @@
+<body style="padding-left:3%; padding-right:3%">
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div id="v">
+    <h4 class="text-muted">Locks</h4><button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" id="buttons" (click)="open()">Add lock</button>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col" *ngIf="!mode.tang">Status</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of serverData">
+          <th scope="row">
+            {{item.name}}
+          </th>
+          <th scope="row" *ngIf="!mode.tang">
+            Locked
+          </th>
+          <th scope="row">
+            <button class="btn btn-sm btn-light float-right" routerLink="/lock/{{item.lockID}}">Details</button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>

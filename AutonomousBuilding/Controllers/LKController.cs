@@ -25,10 +25,16 @@ namespace AutonomousBuilding.Controllers
     {
       return await this.lockKeyDataRepository.GetAllAsync();
     }
+    // GET api/pk/5
+    [HttpGet("tester/{id}")]
+    public LockKey[] Gets(int id)
+    {
+        return lockKeyDataRepository.Finds(id);
+    }
 
     // GET api/pk/5
     [HttpGet("{id}")]
-    public LockKey Get(int id)
+    public LockKey[] Get(int id)
     {
             return lockKeyDataRepository.Find(id);
     }

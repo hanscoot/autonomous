@@ -1,0 +1,36 @@
+  <div class="modal-content">
+    <div class="modal-body">
+      <button class="close blank" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div style="padding-top:10%;">
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+          <ngb-panel id="static-1" title="Add One-Time User">
+            <ng-template ngbPanelContent>
+              <input #name class="form-control" id="input1" placeholder="Enter Name">
+              <div class="input-group">
+                <input #email class="form-control" id="input2" placeholder="Enter Email">
+                <div class="input-group-append">
+                  <span class="input-group-text">@nomuda.com</span>
+                </div>
+              </div>
+              <input #input class="form-control" id="input3" placeholder="Enter Phone Number">
+
+              <div class="custom-control custom-checkbox custom-control-inline" *ngFor="let i of locks">
+                <input class="custom-control-input" type="checkbox" value="" id="{{i.lockID}}" (change)="check(i, $event)">
+                <label class="custom-control-label" for="{{i.lockID}}">
+                  {{i.name}}
+                </label>
+              </div>
+              <br />
+              <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
+              <ngb-timepicker [(ngModel)]="stime"></ngb-timepicker>
+              <ngb-timepicker [(ngModel)]="etime"></ngb-timepicker>
+              <button class="btn btn-primary btn-sm float-right" id="vspe" (click)="add(name.value, email.value, input.value)">Add User</button>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>              
+      </div> 
+    </div>
+  </div>
+

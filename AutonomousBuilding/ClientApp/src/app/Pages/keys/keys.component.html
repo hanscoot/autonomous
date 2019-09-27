@@ -37,24 +37,6 @@
             <button *ngIf="item.temp" class="btn btn-sm btn-dark float-right" disabled>Delete</button>
           </th>
         </tr>
-        <tr *ngFor="let item of serverData">
-          <th scope="row">
-            {{item.keyID}}
-          </th>
-          <th scope="row" *ngIf="!mode.tang">
-            {{item.content}}
-          </th>
-          <th scope="row">
-            Not assigned
-          </th>
-          <th scope="row" *ngIf="!mode.tang">
-            <ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="item.content">
-            </ngx-qrcode>
-          </th>
-          <th scope="row">
-            <button class="btn btn-sm btn-dark float-right" (click)="del(item)">Delete</button>
-          </th>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -65,6 +47,7 @@
       <input #content class="form-control form-control-sm shadow-none" id="content">
       <p id="test"></p>
       <button class="btn btn-sm btn-primary" (click)="check(content.value)">Check?</button>
+      <button class="btn btn-sm btn-primary" (click)="chec()">check scanner?</button>
     </div>
   </div>
 </body>

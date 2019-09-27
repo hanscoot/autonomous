@@ -15,20 +15,38 @@
       <p class="text-danger" id="demo"></p>
       &nbsp;
     </div>
-    <label for="type">Type</label>
-    <input #type class="form-control form-control-sm shadow-none" id="type" placeholder="Enter Type">
+    <label for="type">Output Type</label>
+    <input #type class="form-control form-control-sm shadow-none" id="type" placeholder="Enter Output Type">
     <div>
       <p class="text-danger" id="one"></p>
       &nbsp;
     </div>
-    <label for="ip">IP Address</label>
-    <input #ip class="form-control form-control-sm shadow-none" id="ip" placeholder="Enter IP">
+    <label for="ip">Output IP Address</label>
+    <input #ip class="form-control form-control-sm shadow-none" id="ip" placeholder="Enter Output IP">
     <div>
       <p class="text-danger" id="two"></p>
       &nbsp;
     </div>
-    <label for="output">Output</label>
-    <input #output class="form-control form-control-sm shadow-none" id="output" placeholder="Enter Port Number">
+    <label for="output">Output Port</label>
+    <input #output class="form-control form-control-sm shadow-none" id="output" placeholder="Enter Output Port Number">
+    <div>
+      <p class="text-danger" id="three"></p>
+      &nbsp;
+    </div>
+    <label for="type">Input Type</label>
+    <input #typed class="form-control form-control-sm shadow-none" id="type" placeholder="Enter Input Type">
+    <div>
+      <p class="text-danger" id="one"></p>
+      &nbsp;
+    </div>
+    <label for="ip">Input IP Address</label>
+    <input #ipd class="form-control form-control-sm shadow-none" id="ip" placeholder="Enter Input IP">
+    <div>
+      <p class="text-danger" id="two"></p>
+      &nbsp;
+    </div>
+    <label for="output">Input Port</label>
+    <input #outputd class="form-control form-control-sm shadow-none" id="output" placeholder="Enter Input Port Number">
     <div>
       <p class="text-danger" id="three"></p>
       &nbsp;
@@ -39,6 +57,6 @@
       <p class="text-danger" id="four"></p>
       &nbsp;
     </div>
-    <button class="btn btn-primary btn-sm float-right" (click)="add(name.value, type.value, ip.value, output.value, delay.value)">Add new lock</button>
+    <button class="btn btn-primary btn-sm float-right" (click)="add(name.value, type.value, ip.value, output.value, typed.value, ipd.value, outputd.value, delay.value)">Add new lock</button>
   </div>
 </div>

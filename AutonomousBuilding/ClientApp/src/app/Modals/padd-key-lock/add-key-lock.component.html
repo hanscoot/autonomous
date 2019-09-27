@@ -11,7 +11,6 @@
       <select class="form-control" id="example" (change)="selects($event)">
         <option value="" disabled selected>Select your key</option>
         <option *ngFor="let i of username">{{i.keyID}} - {{i.name}}</option>
-        <option *ngFor="let i of keys">{{i.keyID}} - Not Assigned</option>
       </select>
     </div>
     <button class="btn btn-sm btn-primary float-right" (click)="add()">Add</button>

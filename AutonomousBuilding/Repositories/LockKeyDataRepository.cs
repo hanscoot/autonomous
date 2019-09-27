@@ -14,7 +14,8 @@ namespace AutonomousBuilding.Repositories
         Task<IEnumerable<LockKey>> GetAllAsync();
         void Test(LockKey value);
         void Del(int id);
-        LockKey Find(int id);
+        LockKey[] Finds(int id);
+        LockKey[] Find(int id);
         LockKeyName Name(int id);
     }
 
@@ -61,7 +62,7 @@ namespace AutonomousBuilding.Repositories
             }
         }
         //gets specific id
-        public LockKey Find(int id)
+        public LockKey[] Find(int id)
         {
             using (var conn = new SqlConnection(this.connString))
             {
@@ -71,7 +72,22 @@ namespace AutonomousBuilding.Repositories
                                                     " INNER JOIN Keys ON Keys.KeyID = LockKeys.KeyID" +
                                                     " WHERE LockKeys.LockID = @LockID";
                 conn.Open();
-                return conn.Query<LockKey>(sQuery, new { LockID = id }).FirstOrDefault();
+                return conn.Query<LockKey>(sQuery, new { LockID = id }).Cast<LockKey>().ToArray();
+            }
+        }
+
+        //gets specific id
+        public LockKey[] Finds(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT LockKeys.LockKeyID, Keys.KeyID, Locks.LockID" +
+                                                    " FROM LockKeys" +
+                                                    " INNER JOIN Locks ON Locks.LockId = LockKeys.LockID" +
+                                                    " INNER JOIN Keys ON Keys.KeyID = LockKeys.KeyID" +
+                                                    " WHERE LockKeys.LockID = @LockID";
+                conn.Open();
+                return conn.Query<LockKey>(sQuery, new { LockID = id }).Cast<LockKey>().ToArray();
             }
         }
 

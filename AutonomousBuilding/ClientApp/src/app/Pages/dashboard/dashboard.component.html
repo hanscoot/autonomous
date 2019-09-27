@@ -6,7 +6,7 @@
     <div class="grid grid-pad" style="padding-top:20%">
       <a *ngFor="let item of list, let i = index" class="col-1-2">
         <div class="btn-group-vertical">
-          <button class="blank module hero" id="{{i}}" (click)="func(item)">
+          <button class="blank module hero" id="{{i}}" (click)="func()">
             {{item.name}} <p id="demo{{i}}"></p>
           </button>
           <button class="btn btn-light smfont">
@@ -23,7 +23,7 @@
     <div class="grid grid-pad" style="padding-top:5%">
       <a *ngFor="let item of list" class="col-1-4">
         <div class="btn-group-vertical">
-          <button class="blank module hero" id="demo{{item.name}}" (click)="func(item)">
+          <button class="blank module hero" id="demo{{item.name}}" (click)="func()">
             {{item.name}} <p id="{{item.name}}"></p>
           </button>
           <button class="btn btn-light smfont">

@@ -32,9 +32,11 @@ export class LK {
 }
 export class LockType {
   lockTypeID: number;
-  type: string;
-  iP: string;
+  outputType: string;
+  outputIP: string;
   outputPort: number;
+  inputType: string;
+  inputIP: string;
   inputPort: number;
   delay: number;
 }

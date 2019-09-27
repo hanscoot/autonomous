@@ -1,0 +1,21 @@
+IF OBJECT_ID(N'dbo.Locks', N'U') IS NULL 
+begin
+	CREATE TABLE [dbo].[Locks](
+	[LockID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[LockTypeID] [int] NULL,
+	 CONSTRAINT [PK_Locks] PRIMARY KEY CLUSTERED 
+	(
+		[LockID] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+	ALTER TABLE [dbo].[Locks]  WITH CHECK ADD FOREIGN KEY([LockTypeID])
+	REFERENCES [dbo].[LockType] ([LockTypeID])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[Locks]  WITH CHECK ADD  CONSTRAINT [FK_Locks_LockType] FOREIGN KEY([LockID])
+	REFERENCES [dbo].[Locks] ([LockID])
+
+	ALTER TABLE [dbo].[Locks] CHECK CONSTRAINT [FK_Locks_LockType]
+end

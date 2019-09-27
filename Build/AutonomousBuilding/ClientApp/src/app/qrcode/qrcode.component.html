@@ -1,0 +1,10 @@
+<div class="modal-content">
+  <div class="modal-body">
+    <button class="close blank" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <br />
+    <div style="padding-top:10%" class="text-center"><ngx-qrcode [qrc-element-type]="elementType" [qrc-value]="value">
+</ngx-qrcode></div>
+  </div>
+</div>

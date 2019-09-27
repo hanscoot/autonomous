@@ -40,8 +40,8 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "INSERT INTO LockType (Type, IP, OutputPort, Delay)"
-                                + " VALUES(@Type, @IP, @OutputPort, @Delay)";
+                string sQuery = "INSERT INTO LockType (OutputType, OutputIP, OutputPort, InputType, InputIP, InputPort, Delay)"
+                                + " VALUES(@OutputType, @OutputIP, @OutputPort, @InputType, @InputIP, @InputPort, @Delay)";
                 conn.Open();
                 conn.Execute(sQuery, value);
             }
@@ -62,7 +62,7 @@ namespace AutonomousBuilding.Repositories
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "UPDATE LockType SET Type = @Type, IP = @IP, OutputPort = @OutputPort, Delay = @Delay"
+                string sQuery = "UPDATE LockType SET OutputType = @OutputType, OutputIP = @OutputIP, OutputPort = @OutputPort, Delay = @Delay, InputType = @InputType, InputIP = @InputIP, InputPort = @InputPort"
                                + " WHERE LockTypeID = @LockTypeID";
                 conn.Open();
                 conn.Query(sQuery, value);

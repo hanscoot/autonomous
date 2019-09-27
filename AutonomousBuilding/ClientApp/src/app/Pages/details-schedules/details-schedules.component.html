@@ -4,8 +4,8 @@
   <h4>Schedule</h4>
   <h6 class="text-muted">DETAILS</h6>
   <div>&nbsp;</div>
-  <div><h6 class="text-muted">Times: {{schedule.times}}</h6></div>
-  <h6 class="text-muted">Days: {{schedule.days}}</h6>
+  <div><h6 class="text-muted">Times: {{schedule?.times}}</h6></div>
+  <h6 class="text-muted">Days: {{schedule?.days}}</h6>
   <div>
     <button class="btn btn-primary btn-sm float-left" style="display: block; margin: 0 auto;" (click)="openedit()">Edit Schedule</button>
     <button class="btn btn-sm btn-warning float-left" (click)="delete()">Delete</button>
@@ -33,17 +33,6 @@
             </th>
             <th scope="row">
               <button class="btn btn-sm btn-outline-primary float-right" (click)="removal(i)">Remove Key</button>
-            </th>
-          </tr>
-          <tr *ngFor="let i of serverData">
-            <th scope="row">
-              {{i.keyID}}
-            </th>
-            <th scope="row">
-              Not Assigned
-            </th>
-            <th scope="row">
-              <button class="btn btn-sm btn-outline-primary float-right" (click)="remove(i)">Remove Key</button>
             </th>
           </tr>
         </tbody>

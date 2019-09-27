@@ -64,10 +64,10 @@ export class EditLockComponent implements OnInit {
     let Tings: LockType = new LockType();
     Tings = this.lock
     if (this.type(one) === true) {
-      Tings.type = one.trim()
+      Tings.outputType = one.trim()
     }
     if (this.ip(two) === true) {
-      Tings.iP = two.trim()
+      Tings.outputIP = two.trim()
     }
     if (this.output(three) === true) {
       Tings.outputPort = Number(three.trim())
@@ -87,7 +87,7 @@ export class EditLockComponent implements OnInit {
   type(one: string) {
     one.trim()
     if (one != "") {
-      if (one != this.lock.type) {
+      if (one != this.lock.outputType) {
         return true
       }
       else {//unchanged
@@ -102,7 +102,7 @@ export class EditLockComponent implements OnInit {
   ip(one: string) {
     one.trim()
     if (one != "") {
-      if (one != this.lock.iP) {
+      if (one != this.lock.outputIP) {
         return true
       }
       else {//unchanged

@@ -24,7 +24,7 @@ export class AddKeyScheduleComponent implements OnInit {
   public keys: KeyData[] = [];
   public schedule: ScheduleData;
   public list: UserName;
-  public username: UserName[] = [];
+  public username: object;
 
   constructor(private http: HttpClient,
     public activeModal: NgbActiveModal, ) { }
@@ -53,37 +53,14 @@ export class AddKeyScheduleComponent implements OnInit {
     let k: SK = new SK();
     k.scheduleID = this.items
     let item = this.selectedItem.split(" ")
-    let thing = Number(item[0])
-    k.keyID = thing
+    k.keyID = Number(item[0])
     this.http.post<SK[]>(`/api/sk/test`, k, httpOptions).subscribe(() => this.activeModal.close());
 
   }
 
-  //Gets key information for specific person
+  //Gets available key information 
   get() {
-    this.http.get<SK[]>(`/api/sk/testdata`).pipe(take(1)).subscribe(data => {//gets key information for everyone
-      this.serverData = data//edits keys list to only include the keys which nobody has
-      this.http.get<KeyData[]>('/api/keys/testdata').pipe(take(1)).subscribe(data => {
-        this.keys = data
-        for (let i of this.serverData) {
-          for (let j of this.keys) {
-            if (i.keyID === j.keyID) {
-              this.keys = this.keys.filter(k => k !== j)
-            }
-          }
-        }
-        for (let l of this.keys) {//gets user information for the key
-          let urlkey = `/api/account/name/${l.keyID}`
-          this.http.get<UserName>(urlkey).subscribe(data => {
-            this.list = data;
-            if (this.list !== null) {
-              this.username.push(this.list)//remove key from other list if key is assigned to a user
-              this.keys = this.keys.filter(k => k.keyID !== l.keyID)
-            }
-          })
-        }
-      })
-    })
+    this.http.post('/api/file/notschedulekey', httpOptions).subscribe(data => {this.username = data})
   }
 
 }

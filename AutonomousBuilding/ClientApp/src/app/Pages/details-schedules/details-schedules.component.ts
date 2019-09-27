@@ -31,7 +31,7 @@ export class DetailsSchedulesComponent implements OnInit {
   public not: ScheduleData;
   public serverData: SK[] = [];
   public list: UserName;
-  public username: UserName[] = [];
+  public username: object;
 
   ngOnInit() {
     this.getschedule().subscribe(data => { this.schedule = data })
@@ -48,42 +48,10 @@ export class DetailsSchedulesComponent implements OnInit {
   //gets schedule key data correspoonding to the schedule clicked
   count = 0
   getschedules() {
-    let url = `/api/sk/testdata`
-    this.http.get<SK[]>(url).subscribe(data => {
-    this.serverData = data;
-      for (let i of this.serverData) {
-        if (i.scheduleID.toString() !== this.id) {
-          this.serverData = this.serverData.filter(k => k !== i)
-        }
-      }
-      for (let l of this.serverData) {//gets user information for the key
-        let urlkey = `/api/account/name/${l.keyID}`
-        this.http.get<UserName>(urlkey).subscribe(data => {
-          this.list = data;
-          if (this.list !== null) {
-            this.username.push(this.list)//remove key from other list if key is assigned to a user
-            this.serverData = this.serverData.filter(k => k.keyID !== l.keyID)
-          }
-        })
-      }
-    });
+    let url = `/api/file/schedulekey/${this.id}`
+    this.http.post(url, httpOptions).subscribe(data => {this.username = data })
   }
-  //deletes person's key from schedule key data
-  remove(item: SK) {
-    var m = confirm("Are you sure you want to delete this?")
-    if (m === true) {
-      let urll = `/api/schedule/${item.scheduleID}`
-      this.http.get<ScheduleData>(urll).subscribe(data => {
-        this.not = data
-        this.not.number = this.not.number - 1
-        this.http.put<ScheduleData>(urll, this.not, httpOptions).subscribe()
-        console.log(this.not)
-      })
-      let url = `/api/sk/${item.scheduleKeyID}`
-      this.http.delete<SK[]>(url).subscribe();
-      this.serverData = this.serverData.filter(k => k !== item)
-    }
-  }
+
   //deletes person's key from schedule key data
   item: SK
   removal(item: UserName) {
@@ -97,13 +65,11 @@ export class DetailsSchedulesComponent implements OnInit {
           this.not = data
           this.not.number = this.not.number - 1
           this.http.put<ScheduleData>(urll, this.not, httpOptions).subscribe()
-          console.log(this.not)
         })
         let url = `/api/sk/${this.item.scheduleKeyID}`
         this.http.delete<SK[]>(url).subscribe();
-        this.username = this.username.filter(k => k.keyID !== this.item.keyID)
+        setTimeout(() => { this.getschedules() }, 100)
       })
-      
     }
   }
 

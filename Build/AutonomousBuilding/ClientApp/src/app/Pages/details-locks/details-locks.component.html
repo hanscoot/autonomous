@@ -1,0 +1,57 @@
+<body style="padding-left:3%; padding-right:3%">
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <h4>{{name.name}} </h4>
+  <h6 class="text-muted">DETAILS</h6>
+  <div>
+    <p class="text-muted" id="status"></p>
+    &nbsp;
+  </div>
+  <div>
+    <button class="btn btn-primary btn-sm float-left" style="display: block; margin: 0 auto;" (click)="edit()">Edit Lock</button>
+    <button class="btn btn-warning btn-sm float-left" style="display: block; margin: 0 auto;" (click)="delete()">Delete Lock</button>
+    <button class="btn btn-sm blank float-left" style="display: block; margin: 0 auto;" [disabled]="one" (click)="on()"><fa name="lock"></fa></button>
+    <button class="btn btn-primary btn-sm float-right" style="display: block; margin: 0 auto;" (click)="open()">Add Key</button>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <ng-container *ngIf="show">
+    <div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Keys</th>
+            <th scope="col">User</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of username">
+            <th scope="row">
+              {{i.keyID}}
+            </th>
+            <th scope="row">
+              {{i.name}}
+            </th>
+            <th scope="row">
+              <button *ngIf="!i.temp" class="btn btn-sm btn-outline-primary float-right" (click)="removal(i)">Remove Key</button>
+              <button *ngIf="i.temp" class="btn btn-sm btn-outline-primary float-right" disabled>Remove Key</button>
+            </th>
+          </tr>
+          <tr *ngFor="let i of server">
+            <th scope="row">
+              {{i.keyID}}
+            </th>
+            <th scope="row">
+              Not Assigned
+            </th>
+            <th scope="row">
+              <button class="btn btn-sm btn-outline-primary float-right" (click)="remove(i)">Remove Key</button>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</body>
+

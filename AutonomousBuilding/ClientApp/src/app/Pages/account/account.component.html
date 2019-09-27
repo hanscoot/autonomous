@@ -14,19 +14,19 @@
     <h6>Contact Number:</h6> {{users.number}}
     <div>&nbsp;</div>
     <h6>Key assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of key">
+    <ul style="list-style: none; padding-left: 0;">
       <li>
-        {{i.keyID}}
+        {{keys.keyID}}
       </li>
     </ul>
     <h6>Locks assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of locks">
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of lock">
       <li>
         {{i.name}}
       </li>
     </ul>
     <h6>Schedules assigned:</h6>
-    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of schedules">
+    <ul style="list-style: none; padding-left: 0;" *ngFor="let i of schedule">
       <li>
         {{i.days}} {{i.times}} (Key ID {{i.keyID}})
       </li>

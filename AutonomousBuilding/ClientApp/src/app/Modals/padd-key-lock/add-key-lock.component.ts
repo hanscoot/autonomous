@@ -26,7 +26,7 @@ export class AddKeyLockComponent implements OnInit {
   public key: KeyData;
   data: LockData;
   public list: UserName;
-  public username: UserName[] = [];
+  public username: object;
 
   constructor(private http: HttpClient,
     public activeModal: NgbActiveModal,
@@ -55,33 +55,7 @@ export class AddKeyLockComponent implements OnInit {
 
   //Gets key information for specific lock
   get() {
-    this.http.get<LK[]>(`/api/lk/testdata`).pipe(take(1)).subscribe(data => {
-      this.serverData = data
-      for (let i of this.serverData) { //gets key data for specific lock
-        if (i.lockID.toString() !== this.items) {
-          this.serverData = this.serverData.filter(k => k !== i)
-        }
-      }//edits keys list to only include the keys which the lock hasn't already got
-      this.http.get<KeyData[]>('/api/keys/testdata').pipe(take(1)).subscribe(data => {
-        this.keys = data
-        for (let i of this.serverData) {
-          for (let j of this.keys) {
-            if (i.keyID === j.keyID) {
-              this.keys = this.keys.filter(k => k !== j)
-            }
-          }   
-        }
-        for (let l of this.keys) {//gets user information for the key
-          let urlkey = `/api/account/name/${l.keyID}`
-          this.http.get<UserName>(urlkey).subscribe(data => {
-            this.list = data;
-            if (this.list !== null) {
-              this.username.push(this.list)//remove key from other list if key is assigned to a user
-              this.keys = this.keys.filter(k => k.keyID !== l.keyID)
-            }
-          })
-        }
-      })    
-    })
+    let url = `/api/file/notlockkey/${this.items}`
+    this.http.post(url, httpOptions).subscribe(data => { this.username = data })
   }
 }

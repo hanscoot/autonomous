@@ -2,9 +2,11 @@ IF OBJECT_ID(N'dbo.LockType', N'U') IS NULL
 begin
 	CREATE TABLE [dbo].[LockType](
 	[LockTypeID] [int] IDENTITY(1,1) NOT NULL,
-	[Type] [nvarchar](max) NULL,
-	[IP] [nvarchar](max) NULL,
+	[OutputType] [nvarchar](max) NULL,
+	[OutputIP] [nvarchar](max) NULL,
 	[OutputPort] [int] NULL,
+	[InputType] [nvarchar](max) NULL,
+	[InputIP] [nvarchar](max) NULL,
 	[InputPort] [int] NULL,
 	[Delay] [int] NULL,
 	 CONSTRAINT [PK_LockType] PRIMARY KEY CLUSTERED 

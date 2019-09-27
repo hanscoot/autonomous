@@ -14,9 +14,11 @@ namespace AutonomousBuilding.Repositories
         Task<IEnumerable<PersonKey>> GetAllAsync();
         Task<IEnumerable<KeyPerson>> GetAllasync();
         void Test(PersonKey value);
+        PersonKey[] Tests();
         void Del(int id);
-        PersonKey Find(int id);
+        KeyPerson Find(int id);
         KeyPerson GetPerson(int id);
+        KeyPerson GetPersons(int id);
     }
 
     public class PersonKeyDataRepository : IPersonKeyDataRepository
@@ -25,6 +27,16 @@ namespace AutonomousBuilding.Repositories
         public PersonKeyDataRepository(IConfiguration config)
         {
             this.connString = config.GetConnectionString("default");
+        }
+        //gets all
+        public PersonKey[] Tests()
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT PersonKeys.KeyID FROM PersonKeys";
+                conn.Open();
+                return conn.Query<PersonKey>(sQuery).Cast<PersonKey>().ToArray();
+            }
         }
 
         //get from keys
@@ -69,23 +81,23 @@ namespace AutonomousBuilding.Repositories
             using (var conn = new SqlConnection(this.connString))
             {
                 string sQuery = "DELETE FROM PersonKeys"
-                            + " WHERE PersonKeyID = @PersonKeyID";
+                            + " WHERE KeyID = @KeyID";
                 conn.Open();
-                conn.Execute(sQuery, new { PersonKeyID = id });
+                conn.Execute(sQuery, new { KeyID = id });
             }
         }
         //gets specific id
-        public PersonKey Find(int id)
+        public KeyPerson Find(int id)
         {
             using (var conn = new SqlConnection(this.connString))
             {
-                string sQuery = "SELECT PersonKeys.PersonKeyID, PersonKeys.KeyID" +
+                string sQuery = "SELECT People.Name, People.Temp, PersonKeys.KeyID, Keys.Content" +
                                                     " FROM PersonKeys" +
                                                     " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
                                                     " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +
                                                     " WHERE PersonKeys.PersonID = @PersonID";
                 conn.Open();
-                return conn.Query<PersonKey>(sQuery, new { PersonID = id }).FirstOrDefault();
+                return conn.Query<KeyPerson>(sQuery, new { PersonID = id }).FirstOrDefault();
             }
         }
 
@@ -94,6 +106,19 @@ namespace AutonomousBuilding.Repositories
             using (var conn = new SqlConnection(this.connString))
             {
                 string sQuery = "SELECT People.Name, PersonKeys.KeyID" +
+                                                    " FROM PersonKeys" +
+                                                    " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
+                                                    " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +
+                                                    " WHERE PersonKeys.KeyID = @KeyID";
+                conn.Open();
+                return conn.Query<KeyPerson>(sQuery, new { KeyID = id }).FirstOrDefault();
+            }
+        }
+        public KeyPerson GetPersons(int id)
+        {
+            using (var conn = new SqlConnection(this.connString))
+            {
+                string sQuery = "SELECT People.Name, People.Temp, PersonKeys.KeyID, Keys.Content" +
                                                     " FROM PersonKeys" +
                                                     " INNER JOIN People ON People.PersonId = PersonKeys.PersonID" +
                                                     " INNER JOIN Keys ON Keys.KeyID = PersonKeys.KeyID" +

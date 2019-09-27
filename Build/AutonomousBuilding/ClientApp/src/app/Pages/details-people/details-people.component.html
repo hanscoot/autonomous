@@ -1,0 +1,42 @@
+<body>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <h4>{{person.name}}<b class="text-warning h5" *ngIf="person.temp">&nbsp;[Temp]</b></h4>
+  <h6 class="text-muted">DETAILS</h6>
+  <div><h6 class="text-muted" >Email: {{person.email}}</h6></div>
+  <h6 class="text-muted">Phone Number: {{person.number}}</h6>
+  <div>&nbsp;</div>
+  <div>
+    <button class="btn btn-sm btn-primary float-left" (click)="openEdit()">Edit Person</button>
+    <button class="btn btn-sm btn-warning float-left" [disabled]="person.temp" (click)="delete()">Delete</button>
+    <button class="btn btn-primary btn-sm float-right" id="demo" style="display: block; margin: 0 auto;" (click)="open()">Add Key</button>
+  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <ng-container *ngIf="show">
+    <div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Key ID</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of serverData">
+            <th scope="row">
+              {{i.keyID}}
+            </th>
+            <th scope="row">
+              <button class="btn btn-sm btn-outline-primary float-right" (click)="remove(i)">Remove Key</button>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</body>
+
+
+
+

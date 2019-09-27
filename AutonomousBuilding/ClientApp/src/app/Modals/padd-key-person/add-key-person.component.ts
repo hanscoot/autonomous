@@ -22,7 +22,7 @@ export class AddKeyPersonComponent implements OnInit {
   @Input() public items;
 
   public serverData: PK[] = [];
-  public keys: KeyData[] = [];
+  public keys: object;
   data: TestData;
 
   constructor(private http: HttpClient,
@@ -50,18 +50,6 @@ export class AddKeyPersonComponent implements OnInit {
 
   //Gets key information for specific person
   get() {
-    this.http.get<PK[]>(`/api/pk/testdata`).pipe(take(1)).subscribe(data => {//gets key information for everyone
-      this.serverData = data//edits keys list to only include the keys which nobody has
-      this.http.get<KeyData[]>('/api/keys/testdata').pipe(take(1)).subscribe(data => {
-        this.keys = data
-        for (let i of this.serverData) {
-          for (let j of this.keys) {
-            if (i.keyID === j.keyID) {
-              this.keys = this.keys.filter(k => k !== j)
-            }
-          }   
-        }
-      })    
-    })
+    this.http.post('/api/file/notpersonkey', httpOptions).subscribe(data => { this.keys = data; console.log(this.keys) })
   }
 }
